@@ -1,0 +1,28 @@
+<%- include("../common/head.ejs") %>
+
+<%- include("../common/navbar.ejs") %>
+
+<section style="margin: 80px; font-family: monospace">
+  <div style="max-width: 320px;">
+    <div>
+      <h2>Welcome back to <span class="text-secondary">MyWasteWatch</span></h2>
+      <p class="text-muted mb-4">Log in to your account</p>
+    </div>
+    <form action="/login_process" method="post">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="password" >Password</label>
+        <input type="password" id="password" name="password" required class="form-control">
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="text-center mt-4">
+      <small >Don’t have an account? <a class="text-primary" href="/signup">Sign up</a></small>
+    </div>
+  </div>
+</section>
+
+<%- include("../common/footer.ejs") %>
