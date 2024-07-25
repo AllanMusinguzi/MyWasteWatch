@@ -10,7 +10,7 @@ module.exports = {
         try {
             let x = await mongo_client.connect(url);
             _db = x.db("waste_management_system");
-            console.log("DB Connected");
+            console.log("Hello,Patrick! You're connected to MongoDB!😂😹🙌👊✌️");
 
 
             // Create a user table if there is no user table

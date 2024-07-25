@@ -10,7 +10,7 @@ exports.getLoginPage = (req, res) => {
     if (req.session.isAdmin) {
         res.redirect("/admin/dashboard");
     } else {
-        res.render("admin/adminlogin.ejs");
+        res.render("admin/adminLogin.ejs");
     }
 };
 
@@ -115,7 +115,7 @@ exports.getAllRequests = async (req, res) => {
         .find({})
         .toArray()
         .then((result) => {
-            res.render("admin/all-requests.ejs", { requests: result.reverse(), drivers: allDrivers });
+            res.render("admin/allRequests.ejs", { requests: result.reverse(), drivers: allDrivers });
         })
         .catch((err) => {
             console.log(err);
