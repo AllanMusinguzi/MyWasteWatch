@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Driver Login/Signup</title>
-
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -65,7 +66,7 @@
     }
 
     input[type="submit"] {
-      background-color: #007bff;
+      background-color: indigo;
       color: #fff;
       border: none;
       padding: 10px 20px;
@@ -74,7 +75,7 @@
     }
 
     input[type="submit"]:hover {
-      background-color: #0056b3;
+      background-color: indigo;
     }
 
     .switch {
@@ -87,10 +88,11 @@
     }
   </style>
 </head>
-
+<%- include("../common/navbar.ejs") %>
 <body>
-  <%- include("../common/navbar.ejs") %>
-    <div class="flex justify-center items-center   h-full">
+
+  <br><br>
+    <div class="flex justify-center items-center   h-full" style="margin: 50px 0px 50px 0px; font-family: monospace;">
       <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
         <h1 class="text-2xl font-bold mb-6 text-center">Driver Login</h1>
         <form id="loginForm" action="/driver/login_process" method="POST">
@@ -111,10 +113,12 @@
         </form>
       </div>
     </div>
-    <%- include("../common/footer.ejs") %>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <br><br>
+ 
 </body>
-
-</html>
+<br><hr><br>
+<%- include("../common/footer.ejs") %>

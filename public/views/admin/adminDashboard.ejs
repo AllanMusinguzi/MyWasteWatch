@@ -41,7 +41,7 @@
         </a>
       </li>
       <li>
-        <a href="/admin/create-driver" class="flex items-center text-gray-900 p-2 rounded-lg group" style="text-decoration: none;">
+        <a href="/admin/createDriver" class="flex items-center text-gray-900 p-2 rounded-lg group" style="text-decoration: none;">
           <svg class="flex-shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
           </svg>
@@ -60,23 +60,23 @@
           <p class="text-2xl text-gray-900">Dashboard</p>
         </div>
       </a>
-      <a href="#" class="flex items-center justify-center rounded-xl bg-purple-100 h-28" style="text-decoration: none;">
+      <a href="/admin/allUsers" class="flex items-center justify-center rounded-xl bg-purple-100 h-28" style="text-decoration: none;">
         <div  class="flex items-center p-2 rounded-lg group">
           <p class="text-2xl text-gray-900">Users</p>
         </div>
       </a>
-      <a href="/admin/all-requests" class="flex items-center justify-center rounded-xl bg-yellow-100 h-28" style="text-decoration: none;">
+      <a href="/admin/allRequests" class="flex items-center justify-center rounded-xl bg-yellow-100 h-28" style="text-decoration: none;">
         <div class="flex items-center p-2 rounded-lg group">
           <p class="text-2xl text-gray-900">Requests</p>
         </div>
       </a>
-      <a href="/admin/all-drivers" class="flex items-center justify-center rounded-xl bg-red-100 h-28" style="text-decoration: none;">
+      <a href="/admin/allDrivers" class="flex items-center justify-center rounded-xl bg-red-100 h-28" style="text-decoration: none;">
         <div class="flex items-center p-2 rounded-lg group" >
           <p class="text-2xl text-gray-900">Drivers</p>
         </div>
       </a>
     </div>
-    <a href="/admin/create-driver" class="flex items-center justify-center rounded-xl bg-green-100 h-28 mb-4" style="text-decoration: none;">
+    <a href="/admin/createDriver" class="flex items-center justify-center rounded-xl bg-green-100 h-28 mb-4" style="text-decoration: none;">
       <div class="flex items-center p-2 rounded-lg group">
         <p class="text-2xl text-gray-900">Create Driver</p>
       </div>
@@ -84,10 +84,9 @@
   </div>
 </main>
 
-<%- include("../common/footer.ejs") %>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+<%- include("../common/footer.ejs") %>
+
