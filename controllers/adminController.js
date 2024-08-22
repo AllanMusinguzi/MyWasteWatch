@@ -1,3 +1,4 @@
+
 const bcrypt = require("bcrypt");
 const _db = require("../config/db");
 const { ObjectId } = require("mongodb");
@@ -29,97 +30,95 @@ exports.loginAdmin = (req, res) => {
 
 exports.getAdminDashboard = async (req, res) => {
     let db = _db.getDb();
+    /*if (!db) {
+        console.error('Database instance is not available');
+        return res.status(500).send('Internal Server Error');
+    }*/
 
-    let result = await db
-        .collection("requests")
-        .find(
-            {},
-            {
+    try {
+        let result = await db
+            .collection("requests")
+            .find({}, {
                 projection: {
                     _id: false,
                     request_type: true,
                     status: true,
                     assignedDriver: true,
                 },
-            }
-        )
-        .toArray();
+            })
+            .toArray();
 
-    let driverData = await db
-        .collection("drivers")
-        .find(
-            {},
-            {
+        let driverData = await db
+            .collection("drivers")
+            .find({}, {
                 projection: {
                     _id: false,
                     vehicleType: true,
                 },
-            }
-        )
-        .toArray();
+            })
+            .toArray();
 
-    let userData = await db
-        .collection("users")
-        .find(
-            {},
-            {
+        let userData = await db
+            .collection("users")
+            .find({}, {
                 projection: {
                     _id: false,
                     name: true,
                 },
-            }
-        )
-        .toArray();
+            })
+            .toArray();
 
-    const total_requests = result.length;
-    const total_pending = result.filter((item) => item.status === "pending").length;
-    const total_resolved = result.filter((item) => item.status === "resolved").length;
-    const total_pickup_request = result.filter((item) => item.request_type === "Pickup").length;
-    const total_complaint_request = result.filter((item) => item.request_type === "Complaint").length;
-    const total_recycling_request = result.filter((item) => item.request_type === "Recycling").length;
-    const total_other_request = result.filter((item) => item.request_type === "Other").length;
-    const total_unassigned_driver_requests = result.filter((item) => item.assignedDriver === "none").length;
-    const total_users = userData.length;
-    const total_drivers = driverData.length;
-    const total_trucks = driverData.filter((item) => item.vehicleType === "Truck").length;
-    const total_cars = driverData.filter((item) => item.vehicleType === "Car").length;
-    const total_van = driverData.filter((item) => item.vehicleType === "Van").length;
-    const total_motorcycle = driverData.filter((item) => item.vehicleType === "Motorcycle").length;
+        const total_requests = result.length;
+        const total_pending = result.filter((item) => item.status === "pending").length;
+        const total_resolved = result.filter((item) => item.status === "resolved").length;
+        const total_pickup_request = result.filter((item) => item.request_type === "Pickup").length;
+        const total_complaint_request = result.filter((item) => item.request_type === "Complaint").length;
+        const total_recycling_request = result.filter((item) => item.request_type === "Recycling").length;
+        const total_other_request = result.filter((item) => item.request_type === "Other").length;
+        const total_unassigned_driver_requests = result.filter((item) => item.assignedDriver === "none").length;
+        const total_users = userData.length;
+        const total_drivers = driverData.length;
+        const total_trucks = driverData.filter((item) => item.vehicleType === "Truck").length;
+        const total_cars = driverData.filter((item) => item.vehicleType === "Car").length;
+        const total_van = driverData.filter((item) => item.vehicleType === "Van").length;
+        const total_motorcycle = driverData.filter((item) => item.vehicleType === "Motorcycle").length;
 
-    res.render("admin/adminDashboard.ejs", {
-        result: {
-            total_requests,
-            total_pending,
-            total_resolved,
-            total_pickup_request,
-            total_complaint_request,
-            total_recycling_request,
-            total_other_request,
-            total_unassigned_driver_requests,
-            total_drivers,
-            total_users,
-            total_trucks,
-            total_cars,
-            total_van,
-            total_motorcycle,
-        },
-    });
+        res.render("admin/adminDashboard.ejs", {
+            result: {
+                total_requests,
+                total_pending,
+                total_resolved,
+                total_pickup_request,
+                total_complaint_request,
+                total_recycling_request,
+                total_other_request,
+                total_unassigned_driver_requests,
+                total_drivers,
+                total_users,
+                total_trucks,
+                total_cars,
+                total_van,
+                total_motorcycle,
+            },
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred while fetching dashboard data.");
+    }
 };
 
 exports.getAllRequests = async (req, res) => {
     let db = _db.getDb();
 
-    let allDrivers = await db.collection("drivers").find({}).project({ name: 1 }).toArray();
+    try {
+        let allDrivers = await db.collection("drivers").find({}).project({ name: 1 }).toArray();
 
-    db.collection("requests")
-        .find({})
-        .toArray()
-        .then((result) => {
-            res.render("admin/allRequests.ejs", { requests: result.reverse(), drivers: allDrivers });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        let result = await db.collection("requests").find({}).toArray();
+        res.render("admin/allRequests.ejs", { requests: result.reverse(), drivers: allDrivers });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred while fetching requests.");
+    }
 };
 
 exports.assignDriver = async (req, res) => {
@@ -141,11 +140,11 @@ exports.assignDriver = async (req, res) => {
             { returnDocument: "after" }
         );
 
-        if (data) {
+        if (data.value) {
             res.json({
                 isOK: true,
                 msg: "The driver has been assigned",
-                driverName: data.assignedDriver,
+                driverName: data.value.assignedDriver,
             });
         } else {
             res.json({
@@ -154,13 +153,15 @@ exports.assignDriver = async (req, res) => {
             });
         }
     } catch (err) {
-        res.send(err);
+        console.error(err);
+        res.status(500).send("An error occurred while assigning the driver.");
     }
 };
 
 exports.unassignDriver = async (req, res) => {
     let requestId = req.query.requestId;
     let db = _db.getDb();
+
     try {
         let result = await db.collection("requests").findOneAndUpdate(
             { _id: new ObjectId(requestId) },
@@ -172,7 +173,8 @@ exports.unassignDriver = async (req, res) => {
             },
             { returnDocument: "after" }
         );
-        if (result.assignedDriver === "" && result.assignedDriverId === "") {
+
+        if (result.value.assignedDriver === "" && result.value.assignedDriverId === "") {
             res.json({
                 isUnassigned: true,
                 msg: "The driver has been unassigned successfully.",
@@ -184,13 +186,15 @@ exports.unassignDriver = async (req, res) => {
             });
         }
     } catch (err) {
-        res.send(err);
+        console.error(err);
+        res.status(500).send("An error occurred while unassigning the driver.");
     }
 };
 
 exports.rejectRequest = async (req, res) => {
     let requestId = req.query.requestId;
     let db = _db.getDb();
+
     try {
         let result = await db.collection("requests").findOneAndUpdate(
             { _id: new ObjectId(requestId) },
@@ -204,7 +208,7 @@ exports.rejectRequest = async (req, res) => {
             { returnDocument: "after" }
         );
 
-        if (result.status === "rejected") {
+        if (result.value.status === "rejected") {
             res.json({
                 isRejected: true,
                 msg: "The request has been rejected successfully",
@@ -216,7 +220,8 @@ exports.rejectRequest = async (req, res) => {
             });
         }
     } catch (err) {
-        res.send(err);
+        console.error(err);
+        res.status(500).send("An error occurred while rejecting the request.");
     }
 };
 
@@ -228,27 +233,26 @@ exports.createDriver = async (req, res) => {
     let db = _db.getDb();
     let body = req.body;
 
-    let isExistingUser = await db.collection("drivers").findOne({
-        $or: [{ email: body.email }, { phone: body.phone }],
-    });
+    try {
+        let isExistingUser = await db.collection("drivers").findOne({
+            $or: [{ email: body.email }, { phone: body.phone }],
+        });
 
-    if (isExistingUser) {
-        res.send("Email or phone already registered");
-    } else {
-        if (body.password !== body.confirmPassword) {
-            res.send("Passwords don't match");
+        if (isExistingUser) {
+            res.send("Email or phone already registered");
         } else {
-            body.password = bcrypt.hashSync(body.password, 10);
-            delete body.confirmPassword;
-            db.collection("drivers")
-                .insertOne(body)
-                .then(() => {
-                    res.send("Driver Created");
-                })
-                .catch((err) => {
-                    res.send(err);
-                });
+            if (body.password !== body.confirmPassword) {
+                res.send("Passwords don't match");
+            } else {
+                body.password = bcrypt.hashSync(body.password, 10);
+                delete body.confirmPassword;
+                await db.collection("drivers").insertOne(body);
+                res.send("Driver Created");
+            }
         }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred while creating the driver.");
     }
 };
 
@@ -258,7 +262,8 @@ exports.getAllDrivers = async (req, res) => {
         let result = await db.collection("drivers").find({}).project({ password: 0 }).toArray();
         res.render("admin/allDrivers.ejs", { drivers: result });
     } catch (err) {
-        res.send(err);
+        console.error(err);
+        res.status(500).send("An error occurred while fetching drivers.");
     }
 };
 
@@ -269,7 +274,8 @@ exports.deleteDriver = async (req, res) => {
         await db.collection("drivers").deleteOne({ _id: new ObjectId(driverId) });
         res.send("Driver deleted successfully");
     } catch (err) {
-        res.send("Something went wrong from server side");
+        console.error(err);
+        res.status(500).send("An error occurred while deleting the driver.");
     }
 };
 
