@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require("express");
-const app = express();
 const path = require("path");
 const ejs = require("ejs");
 const cookieParser = require("cookie-parser");
@@ -8,8 +7,9 @@ const nodemailer = require("nodemailer");
 const _db = require("./config/db");
 const indexRoutes = require("./routes/index");
 
-_db.connectToServer();
+const app = express();
 
+// Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -17,6 +17,7 @@ app.set("views", path.join(__dirname, "public/views"));
 app.use(express.static(path.join(__dirname, "public/")));
 app.use(cookieParser());
 
+// Routes
 app.use("/", indexRoutes);
 
 app.post("/send-email", (req, res) => {
@@ -49,6 +50,14 @@ app.get("*", (req, res) => {
     res.render("404.ejs");
 });
 
-app.listen("3000", () => {
-    console.log("Application is running successfully");
+// Initialize the database connection and start the server
+_db.connectToServer((err) => {
+    if (err) {
+        console.error('Database connection failed:', err);
+        process.exit(1);
+    } else {
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000');
+        });
+    }
 });

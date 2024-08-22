@@ -7,7 +7,7 @@
     "start": "npx nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Saurabh Jaiswal",
+  "author": "allanpatrick",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
