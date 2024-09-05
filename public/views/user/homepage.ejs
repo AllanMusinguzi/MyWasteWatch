@@ -1,232 +1,280 @@
 <%- include('../common/head.ejs') %>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="E:\harvey\MyWasteWatch\public\css\styles.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-  *{
-    font-family: monospace;
-    padding: 0px;
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!---style>
+  * {
+    font-family: 'Ubuntu', sans-serif;
+    padding: 0;
     margin: auto;
   }
-  .contact-section {
-    padding: 60px 0;
+  
+  body {
     color: black;
+  }
+
+.contact-intro h2 {
+    font-size: 2.5rem; /* Increase heading size for emphasis */
+    color: #2c3e50; /* Darker color for a more serious tone */
+    font-family: 'Ubuntu', sans-serif; /* Modern, clean font */
 }
 
-.contact-intro {
-    margin-bottom: 30px;
+.contact-intro p {
+    font-size: 1.125rem; /* Slightly larger than normal text */
+    color: #6c757d; /* Muted text color for readability */
+    font-family: 'Ubuntu', sans-serif; /* Ensures uniformity in typography */
+    line-height: 1.6; /* Better spacing for readability */
 }
 
-.contact-video {
-    margin-bottom: 30px;
-}
-
-.contact-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-  .contact-form {
-    background: linear-gradient(135deg, #2980b9, #2c3e50); 
-    padding: 50px 0; 
-    color: #000000; 
+.contact-video .embed-responsive {
+    border-radius: 10px; /* Rounded corners for modern look */
+    border: 2px solid #4CAF50; /* Green border as primary color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .contact-form-container {
-    background-color: rgba(240, 235, 235, 0.945); 
-    border: 5px solid #ddd; 
-    box-shadow: 2px solid whitesmoke;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f9f9f9;
 }
 
-.contact-form-container h2 {
-    color: Black; 
+.form-control:focus {
+    border-color: #2980b9;
+    box-shadow: none;
 }
 
-.contact-form-container form {
-  padding: 0%;
+.floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 40px;
+    top: 12px;
+    transition: 0.2s ease all;
+    color: #888;
 }
 
 .form-group {
-    margin-bottom: 20px; 
+    position: relative;
 }
 
-.form-control {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
+.form-control:not(:placeholder-shown) + .floating-label,
+.form-control:focus + .floating-label {
+    top: -10px;
+    left: 35px;
+    font-size: 12px;
+    opacity: 1;
+    color: #2980b9;
+}
+
+.form-control::placeholder {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.form-control:focus::placeholder {
+    opacity: 1;
 }
 
 .btn-primary {
-    background-color:#700CB3; /*purple-00*/
+    background-image: linear-gradient(135deg, #2c3e50, #2980b9);
+    border: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-image: linear-gradient(135deg, #1e2a38, #217dbb);
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+
+  .btn-primary {
+    background-color: green; /* Primary color: Green */
     color: #fff; 
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 7.5px; 
-}
+  }
 
-.btn-primary:hover {
-    background-color:  #9C27B0;/*purple-500*/
-}
+  .btn-primary:hover {
+    background-color: darkgreen; /* Slightly darker green for hover */
+  }
 
-.btn-secondary{
-  background-color:#700CB3; /*purple-00*/
-  color: #fff; 
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 7.5px; 
-}
+  .btn-secondary {
+    background-color: indigo; /* Secondary color: Indigo */
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 7.5px; 
+  }
 
-.btn-secondary:hover {
-  background-color:  #9C27B0;/*purple-700*/
-}
+  .btn-secondary:hover {
+    background-color: #4B0082; /* Slightly darker indigo for hover */
+  }
 
-</style>
+  .btn-link {
+    color: green;
+  }
+
+  .btn-link:hover {
+    color: darkgreen;
+  }
+</style-->
 
 <%- include('../common/navbar.ejs') %>
 
-
-<section class="bg-indigo-300">
-  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 font-bold">Innovative Waste Management for
-        <br class="hidden lg:inline-block">Cleaner Tomorrow
-      </h1>
-      <p class="mb-8 leading-relaxed">MyWasteWatch revolutionizes waste management with smart technology and sustainable practices. Efficient sorting and processing reduce environmental impact and promote recycling, transforming waste into valuable resources for a cleaner, and a greener future</p>
-      <div class="flex justify-center">
-        <a href="/login">
-          <button class="btn btn-primary btn-lg">Login</button>
-        </a>
-        <a href="/signup">
-          <button class="btn btn-secondary btn-lg ml-4">Signup</button>
-        </a>
+<section style="background-image: radial-gradient(circle, #006400, #ffffff);">
+  <section>
+    <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 font-bold">Innovative Waste Management for
+          <br class="hidden lg:inline-block">Cleaner Tomorrow
+        </h1>
+        <p class="mb-8 leading-relaxed">We revolutionize waste management with smart technology and sustainable practices. Efficient sorting and processing reduce environmental impact and promote recycling, transforming waste into valuable resources for a cleaner, and a greener future</p>
+        <div class="flex justify-center">
+          <a href="/login">
+            <button class="btn btn-lg" style="background-color: #006400; color: #fff;">Login</button>
+          </a>
+          <a href="/signup">
+            <button class="btn btn-lg ml-4" style="background-color: #004b23; color: #fff;">Signup</button>
+          </a>
+        </div>
+      </div>
+      <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+        <img class="img-fluid rounded" alt="hero" src="/images/waste.png">
       </div>
     </div>
-    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img class="img-fluid rounded" alt="hero" src="/images/waste.png">
-    </div>
-  </div>
-</section>
-
-<section class="bg-indigo-200">
-  <div class="container px-5 pt-8 mx-auto">
-    <div class="text-center mb-20">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">Services We Offer</h1>
-      <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-900">
-        MyWasteWatch is committed to providing comprehensive and sustainable waste management solutions tailored to meet diverse needs of communities. We ensure that whether you're a resident, a business owner, or part of an industrial operation, you have access to efficient, environmentally friendly waste disposal options.
-      </p>
-      <div class="flex mt-6 justify-center">
-        <div class="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
-      </div>
-    </div>
-  </div>
+  </section>
   
-  <div class="container">
-    <div style="width: 95%; height: 320px; margin-bottom: 10px">
-      <div>
-         <img class="card-img-top" alt="feature" src="/images/bin2.jpg" style="border-radius: 10px; width: 100%; height: 752px;">
-      </div>
-    </div>
-      <div class="row">
-        <div class="col-lg-4 col-12 mb-4">
-          <div class="card h-100 p-4">
-            <div class="card-body">
-              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-              <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-12 mb-4">
-          <div class="card h-100 p-4">
-            <div class="card-body">
-              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-              <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-12 mb-4">
-          <div class="card h-100 p-4">
-            <div class="card-body">
-              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-              <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div class="row">
-      <div class="col-lg-4 col-12 mb-4">
-        <div class="card h-100 p-4">
-          <div class="card-body">
-            <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-            <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-            <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-12 mb-4">
-        <div class="card h-100 p-4">
-          <div class="card-body">
-            <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-            <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-            <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-12 mb-4">
-        <div class="card h-100 p-4">
-          <div class="card-body">
-            <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
-            <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
-            <a class="btn btn-link text-indigo-500" href="#">Learn More</a>
-          </div>
+  <section class="bg-white">
+    <div class="container px-5 pt-8 mx-auto">
+      <div class="text-center mb-20">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">Services We Offer</h1>
+        <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-900">
+          MyWasteWatch is committed to providing comprehensive and sustainable waste management solutions tailored to meet diverse needs of communities. We ensure that whether you're a resident, a business owner, or part of an industrial operation, you have access to efficient, environmentally friendly waste disposal options.
+        </p>
+        <div class="flex mt-6 justify-center">
+          <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<section class="contact-section bg-indigo-200">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-6">
-              <div class="contact-intro">
-                  <h2>Welcome to MyWasteWatch</h2>
-                  <p>Your ultimate waste management solution to manage your waste responsibly and contribute to a cleaner, greener future.</p>
-              </div>
-              <div class="contact-video embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/p71xuG_dP7M" allowfullscreen></iframe>
-              </div>
-              <img src="public/images/1-s2.0-S2542660520300901-gr3.jpg" alt="Waste Management" class="contact-image">
-          </div>
-          <div class="col-md-6">
-              <div class="contact-form-container p-4 rounded-lg">
-                  <h2 class="text-center mb-4">Contact Us</h2>
-                  <form id="contactForm" action="/send-email" method="POST">
-                      <div class="form-group">
-                          <label for="name">Name</label>
-                          <input type="text" id="name" name="name" class="form-control" required placeholder="Enter your name ">
-                      </div>
-                      <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" id="email" name="email" class="form-control" required placeholder="Type email here">
-                      </div>
-                      <div class="form-group">
-                          <label for="message">Message</label>
-                          <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
-                      </div>
-                      <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                  </form>
-              </div>
-          </div>
+    
+    <div class="container">
+      <div style="width: 100%; height: 320px; margin-bottom: 10px">
+        <div>
+           <img class="card-img-top" alt="feature" src="/images/bin2.jpg" style="border-radius: 10px; width: 100%; height: 752px;">
+        </div>
       </div>
-  </div>
+      <div class="row text-center">
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400;" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12 mb-4">
+          <div class="card h-100 p-4">
+            <div class="card-body">
+              <h2 class="card-title text-gray-900 text-lg title-font font-medium mb-3">Organic Waste</h2>
+              <p class="card-text leading-relaxed text-base">Organic wastes consist of biodegradable material that come from plants or animals. These can be composted, turning into valuable compost that enriches soil and supports plant growth. By proper separation of organic waste.</p>
+              <a class="btn btn-link" style="color: #006400" href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <!-- Repeat similar div structure for other services -->
+      </div>
+    </div>
+  </section>
+ 
+  <section>
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="contact-intro mb-4">
+            <h2 class="display-5 font-weight-bold text-dark">Trust Us With Your Waste</h2>
+            <p class="lead text-gray-900">Your ultimate waste management solution to manage your waste responsibly and contribute to a cleaner, greener future.</p>
+          </div>
+          <div class="contact-video mb-4">
+            <div class="embed-responsive embed-responsive-16by9 shadow-lg rounded-lg border border-secondary">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/p71xuG_dP7M" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <section class="contact" id="contact">
+            <div class="contact-form-container p-4 rounded-lg shadow-lg" style="background-color: #fff;">
+              <h2 class="text-center mb-4" style="color: #006400;">Contact Us</h2>
+              <form id="contactForm" action="/send-email" method="POST">
+                  <div class="form-group position-relative mb-4">
+                      <label for="name" class="floating-label">Name</label>
+                      <input type="text" id="name" name="name" class="form-control form-control-lg" required placeholder=" " style="padding-left: 40px;">
+                      <i class="fa fa-user position-absolute" style="top: 40%; left: 10px; transform: translateY(-50%); color: #006400;"></i>
+                  </div>
+                  <div class="form-group position-relative mb-4">
+                      <label for="email" class="floating-label">Email</label>
+                      <input type="email" id="email" name="email" class="form-control form-control-lg" required placeholder=" " style="padding-left: 40px;">
+                      <i class="fa fa-envelope position-absolute" style="top: 40%; left: 10px; transform: translateY(-50%); color: #006400;"></i>
+                  </div>
+                  <div class="form-group position-relative mb-4">
+                      <label for="message" class="floating-label">Message</label>
+                      <textarea id="message" name="message" class="form-control form-control-lg" rows="4" required placeholder=" " style="padding-left: 40px;"></textarea>
+                      <i class="fa fa-comment position-absolute" style="top: 40%; left: 10px; color: #006400;"></i>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block btn-lg" style="background-color: #006400; border: none; border-radius: 30px;">Submit</button>
+              </form>
+          </div>  
+          </section>
+      </div>
+    </div>
+    <br>
+  </section>
 </section>
-
 
 <script>
   document.getElementById('contactForm').addEventListener('submit', function (event) {
@@ -254,21 +302,14 @@
     })
     .then(response => response.json())
     .then(data => {
-        alert('Message sent successfully!');
+        console.log('Success:', data);
+        // Display success message to the user or perform any other action
     })
-    .catch(error => {
+    .catch((error) => {
         console.error('Error:', error);
-        alert('There was an error sending your message. Please try again later.');
+        // Display error message to the user or perform any other action
     });
-});
-
+  });
 </script>
 
-
 <%- include('../common/footer.ejs') %>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>

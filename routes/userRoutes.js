@@ -8,6 +8,7 @@ router.get("/signup", userController.getSignupPage);
 router.get("/login", userController.getLoginPage);
 router.post("/signup_process", userController.signupUser);
 router.post("/login_process", userController.loginUser);
+//router.post("/contact", userController.getContactPage);
 router.get("/home", authMiddleware, userController.getUserDashboard);
 router.get("/logout", authMiddleware, userController.logoutUser);
 router.get("/raise-a-request", authMiddleware, userController.getRaiseRequestPage);

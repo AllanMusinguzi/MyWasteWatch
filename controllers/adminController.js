@@ -69,8 +69,8 @@ exports.getAdminDashboard = async (req, res) => {
             .toArray();
 
         const total_requests = result.length;
-        const total_pending = result.filter((item) => item.status === "pending").length;
-        const total_resolved = result.filter((item) => item.status === "resolved").length;
+        const total_pending = result.filter((item) => item.status === "Pending").length;
+        const total_resolved = result.filter((item) => item.status === "Resolved").length;
         const total_pickup_request = result.filter((item) => item.request_type === "Pickup").length;
         const total_complaint_request = result.filter((item) => item.request_type === "Complaint").length;
         const total_recycling_request = result.filter((item) => item.request_type === "Recycling").length;
@@ -226,7 +226,7 @@ exports.rejectRequest = async (req, res) => {
 };
 
 exports.getCreateDriverPage = (req, res) => {
-    res.render("admin/create-driver.ejs");
+    res.render("admin/createDriver.ejs");
 };
 
 exports.createDriver = async (req, res) => {
