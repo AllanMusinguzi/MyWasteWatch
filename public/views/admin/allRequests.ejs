@@ -1,223 +1,38 @@
 <%- include("../common/head.ejs") %>
 <%- include("../common/nav.ejs") %>
 
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="/css/styles.css">
 
-<style>
-  body {
-    font-family: 'Ubuntu', sans-serif;
-    background-color: #fff;
-  }
-  #logo-sidebar {
-    background-color: #006400;
-    text-decoration: none;
-    color: white;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
-    top:auto;
-    left: 0;
-  }
-  #logo-sidebar a {
-    text-decoration: none;
-    padding: 20px;
-    background-color: #006400;
-    border-radius: 10px;
-    align-items: center;
-    color: white;
-    transition: all 0.3s ease;
-  }
+<!--Toggle Button-->
+<button id="toggle-btn" class="btn btn-success d-md-none mt-3 ms-3" style="z-index: 1000;">Toggle Sidebar</button>
 
-  #logo-sidebar a:hover {
-    background-color: #004c00;
-  }
-
-  #logo-sidebar::-webkit-scrollbar {
-    width: 8px;
-  }
-  #logo-sidebar::-webkit-scrollbar-thumb {
-    background-color: #004c00;
-  }
-  #logo-sidebar::-webkit-scrollbar-track {
-    background: #003300;
-  }
-  main {
-    margin-left: 250px;
-    border-bottom: 0;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  .grid a {
-    text-decoration: none;
-    padding: 20px;
-    background-color: #006400;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    transition: all 0.3s ease;
-  }
-  .grid a:hover {
-    background-color: #004c00;
-  }
-  .grid p {
-    font-size: 2rem;
-  }
-
-.main {
-  height: auto;
-}
-</style>
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-20 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
   <div class="h-full px-3 pb-4 overflow-y-auto">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="dashboard"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-            <path
-              d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-            <path
-              d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-          </svg>
-          <span class="ms-3 text-xl">Dashboard</span>
+        <a href="dashboard" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"><path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" /><path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" /></svg><span class="ms-3 text-xl">Dashboard</span></a>
+      </li>
+      <li>
+        <a href="/admin/allRequests" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"> <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">All Requests</span></a>
+      </li>
+      <li>
+        <a href="/admin/createDriver" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span></a>
+      </li>
+      <li>
+        <a href="/admin/allDrivers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"> <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">All Drivers</span>
         </a>
       </li>
       <li>
-        <a href="/admin/allRequests"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-            <path
-              d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">All Requests</span>
-        </a>
+        <a href="/admin/logout" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span></a>
       </li>
-      <li>
-        <a href="/admin/createDriver"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/allDrivers"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-            <path
-              d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">All Drivers</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="/admin/logout"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span>
-        </a>
-      </li>
-
-    </ul>
-  </div>
-</aside>
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-20 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-  <div class="h-full px-3 pb-4 overflow-y-auto">
-    <ul class="space-y-2 font-medium">
-      <li>
-        <a href="dashboard"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-            <path
-              d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-            <path
-              d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-          </svg>
-          <span class="ms-3 text-xl">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/allRequests"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-            <path
-              d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">All Requests</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/createDriver"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/allDrivers"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-            <path
-              d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">All Drivers</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="/admin/logout"
-          class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
-          </svg>
-          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span>
-        </a>
-      </li>
-
     </ul>
   </div>
 </aside>
 
-<div class="p-4 sm:ml-64"></div>
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+<div class="p-4 sm:ml-64">
+  <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14" style="font-size: 16px;">
       <div class="container max-w-7xl mx-auto p-6" style="max-height: fit-content;">
           <h2 class="text-2xl font-bold mb-6">Previous Requests</h2>
           <div class="flex">
@@ -298,21 +113,21 @@
                               </td>
                               <td class="px-4 py-2">
                                   <button onclick="unAssignDriver(event)" requestId="<%= item._id %>"
-                                      class="bg-red-500 hover:bg-red-700 text-sm w-32 text-white font-bold py-2  rounded">Unassign
-                                      Driver</button>
+                                      class="bg-red-700 text-white py-1 px-3 capitalize rounded focus:outline-none focus:bg-red-800" style="padding: 2.5px;">Unassign
+                                    </button>
                               </td>
                               <td class="px-4 py-2">
                                   <button onclick="rejectRequest(event)" requestId="<%= item._id %>"
-                                      class="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2 px-4 rounded">Reject</button>
+                                    class="bg-red-700 text-white py-1 px-3 capitalize rounded focus:outline-none focus:bg-red-800" style="padding: 2.5px;">Reject</button>
                               </td>
                               <td class="px-4 py-2">
                                   <div class="truncate">
                                       <%= item.message.length> 20 ? item.message.slice(0, 20) + '...' :
                                           item.message %>
                                           <% if (item.message.length> 20) { %>
-                                              <button class="text-blue-500 hover:text-blue-700"
+                                              <p style="color: #006400; padding: 2.5px; text-transform: capitalize;"
                                                   onclick="showFullMessage('<%= item.message %>')">Show
-                                                  more</button>
+                                                  more</p>
                                               <% } %>
                                   </div>
                               </td>
@@ -336,7 +151,7 @@
                   <div class="sm:flex sm:items-start">
                       <div
                           class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                          <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                          <svg class="h-6 w-6" style="color: #006400;" xmlns="http://www.w3.org/2000/svg" fill="none"
                               viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -352,7 +167,7 @@
                   </div>
                   <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                       <button type="button"
-                          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                          class="w-full inline-flex justify-center capitalize border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" style="background-color: #006400;"
                           onclick="closeModal()">Close</button>
                   </div>
               </div>
