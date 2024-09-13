@@ -278,6 +278,17 @@ exports.deleteDriver = async (req, res) => {
         res.status(500).send("An error occurred while deleting the driver.");
     }
 };
+/*
+exports.getAdminDashboard = async(req, res) => {
+    try {
+        const dashboardItemCount = await Users.countDocuments();
+
+        res.render('admin/adminDashboard.ejs', {dashboardItemCount });
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+};*/
 
 exports.logoutAdmin = (req, res) => {
     req.session.isAdmin = false;

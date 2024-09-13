@@ -1,3 +1,15 @@
+:root {
+  --primary-color: #006400;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: #004c00;
+}
+
 body {
   font-family: 'Ubuntu', sans-serif;
   font-size: 12px;
@@ -5,7 +17,7 @@ body {
   padding: 0;
   color: #000;
 }
-
+/**
 a.text-white:hover {
   background-color: #006400; 
   cursor: pointer;
@@ -54,7 +66,7 @@ ul {
   background-color: #004b23; 
   color: #fff
 }
-
+**/
 .footer {
   background-color: #006400; 
 }
@@ -132,11 +144,7 @@ footer {
     transform: rotate(360deg);
   }
 }
-
-#logo-sidebar {
-  font-family: 'Ubuntu', sans-serif;
-}
-
+/**
 .bg-blue-100, .bg-yellow-100, .bg-green-100, .bg-purple-100, .bg-red-100 {
   background-color: #4B0082;
 }
@@ -241,7 +249,7 @@ footer {
 .transition {
   transition: all 0.2s;
 }
-
+**/
 /** Navigation menu styles **/
 .font-family-ubuntu {
   font-family: 'Ubuntu', sans-serif;
@@ -306,3 +314,110 @@ button:hover svg {
 }
 
 /*.....Navigation Bar---*/
+
+/*** Admin Dashboard **/
+#logo-sidebar {
+  background-color: #006400;
+  text-decoration: none;
+  color: white;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  top:auto;
+  left: 0;
+}
+#logo-sidebar a {
+  text-decoration: none;
+  padding: 20px;
+  background-color: #006400;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+#logo-sidebar a:hover {
+  background-color: #004c00;
+}
+
+#logo-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+#logo-sidebar::-webkit-scrollbar-thumb {
+  background-color: #004c00;
+}
+#logo-sidebar::-webkit-scrollbar-track {
+  background: #003300;
+}
+main {
+  margin-left: 250px;
+  border-bottom: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.grid a {
+  text-decoration: none;
+  padding: 20px;
+  background-color: #006400;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+.grid a:hover {
+  background-color: #004c00;
+}
+.grid p {
+  font-size: 2rem;
+}
+
+.main {
+height: auto;
+}
+
+@media (max-width: 768px){
+#logo-sidebar {
+  transform: translateX(-250px);
+  transition: transform 0.3s ease-in-out;
+}
+#logo_sidebar.show{
+  transform: translateX(0);
+}
+#toggle-btn {
+  display: block;
+  background-color: #006400;
+}
+}
+
+@media (min-width: 768px){
+#toggle-btn {
+  display: none;
+}
+main {
+  margin-left: 250px;
+}
+}
+
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+  color: #000;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+}
+
+.svg-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fff;
+  transition: all 0.2s ease;
+  transition-duration: 75ms;
+}

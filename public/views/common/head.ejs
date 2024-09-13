@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyWasteWatch - An ideal waste management system</title>
-    <link href="public/css/styles.css" rel="stylesheet">
+    <title>MyWasteWatch - An Ideal Waste Management System</title>
+
+    <!-- Custom CSS -->
+    <!--link href="public/css/styles.css" rel="stylesheet"-->
+
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-abc123==" crossorigin="anonymous" />
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,15 +20,32 @@
                 extend: {
                     colors: {
                         clifford: '#da373d',
+                        wastegreen: '#006400', /* Custom Green */
                     }
                 }
             }
         }
     </script>
-
+    <style>
+    body {
+    background-color: #006400; /* Custom Green */
+    color: #fff; /* Set text color to white for contrast */
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+    </style>
 </head>
+
+
+<body class="font-ubuntu bg-gray-100">
+
+    <!-- Add your content here -->
+
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
+</html>
