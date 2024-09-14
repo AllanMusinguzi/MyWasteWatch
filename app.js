@@ -20,6 +20,18 @@ app.use(cookieParser());
 // Routes
 app.use("/", indexRoutes);
 
+app.get('/services', (req, res) => {
+    res.render('services');
+});
+
+app.get('/about-us', (req, res) => {
+    res.render('about-us')
+});
+
+app.get('/contact-us', (req, res) => {
+    res.render('contact-us')
+});
+
 app.post("/send-email", (req, res) => {
     const { name, email, message } = req.body;
 

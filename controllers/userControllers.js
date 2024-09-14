@@ -8,7 +8,7 @@ exports.getHomepage = (req, res) => {
   jwt.verify(token, process.env.jwt_secret, (err, user) => {
     if (err) {
       // Render the landing page if not logged in
-      res.render("user/homepage.ejs");
+      res.render("homepage.ejs");
     } else {
       res.redirect("/home");
     }

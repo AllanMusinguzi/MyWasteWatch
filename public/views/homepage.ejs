@@ -1,131 +1,9 @@
-<%- include('../common/head.ejs') %>
+<%- include('../views/common/head.ejs') %>
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!---style>
-  * {
-    font-family: 'Ubuntu', sans-serif;
-    padding: 0;
-    margin: auto;
-  }
-  
-  body {
-    color: black;
-  }
 
-.contact-intro h2 {
-    font-size: 2.5rem; /* Increase heading size for emphasis */
-    color: #2c3e50; /* Darker color for a more serious tone */
-    font-family: 'Ubuntu', sans-serif; /* Modern, clean font */
-}
-
-.contact-intro p {
-    font-size: 1.125rem; /* Slightly larger than normal text */
-    color: #6c757d; /* Muted text color for readability */
-    font-family: 'Ubuntu', sans-serif; /* Ensures uniformity in typography */
-    line-height: 1.6; /* Better spacing for readability */
-}
-
-.contact-video .embed-responsive {
-    border-radius: 10px; /* Rounded corners for modern look */
-    border: 2px solid #4CAF50; /* Green border as primary color */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.contact-form-container {
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-
-.form-control:focus {
-    border-color: #2980b9;
-    box-shadow: none;
-}
-
-.floating-label {
-    position: absolute;
-    pointer-events: none;
-    left: 40px;
-    top: 12px;
-    transition: 0.2s ease all;
-    color: #888;
-}
-
-.form-group {
-    position: relative;
-}
-
-.form-control:not(:placeholder-shown) + .floating-label,
-.form-control:focus + .floating-label {
-    top: -10px;
-    left: 35px;
-    font-size: 12px;
-    opacity: 1;
-    color: #2980b9;
-}
-
-.form-control::placeholder {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.form-control:focus::placeholder {
-    opacity: 1;
-}
-
-.btn-primary {
-    background-image: linear-gradient(135deg, #2c3e50, #2980b9);
-    border: none;
-    border-radius: 30px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-image: linear-gradient(135deg, #1e2a38, #217dbb);
-}
-
-.position-absolute {
-    position: absolute;
-}
-
-
-  .btn-primary {
-    background-color: green; /* Primary color: Green */
-    color: #fff; 
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 7.5px; 
-  }
-
-  .btn-primary:hover {
-    background-color: darkgreen; /* Slightly darker green for hover */
-  }
-
-  .btn-secondary {
-    background-color: indigo; /* Secondary color: Indigo */
-    color: #fff; 
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 7.5px; 
-  }
-
-  .btn-secondary:hover {
-    background-color: #4B0082; /* Slightly darker indigo for hover */
-  }
-
-  .btn-link {
-    color: green;
-  }
-
-  .btn-link:hover {
-    color: darkgreen;
-  }
-</style-->
-
-<%- include('../common/navbar.ejs') %>
+<%- include('../views/common/navbar.ejs') %>
 
 <section style="background-image: radial-gradient(circle, #006400, #ffffff);">
   <section>
@@ -278,21 +156,18 @@
 
 <script>
   document.getElementById('contactForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the form from submitting the default way
+    event.preventDefault();
 
-    // Capture form data
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
     var message = document.getElementById('message').value;
 
-    // Prepare the data to be sent
     var formData = {
         name: name,
         email: email,
         message: message
     };
 
-    // Send data to the server using fetch API
     fetch('http://localhost:3000/send-email', {
         method: 'POST',
         headers: {
@@ -303,13 +178,11 @@
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // Display success message to the user or perform any other action
     })
     .catch((error) => {
         console.error('Error:', error);
-        // Display error message to the user or perform any other action
     });
   });
 </script>
 
-<%- include('../common/footer.ejs') %>
+<%- include('../views/common/footer.ejs') %>

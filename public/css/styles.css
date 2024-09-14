@@ -535,3 +535,21 @@ main {
     background-position: 50% 0, 60% 50%;
   }
 }
+
+/**** Side Bar Button****/
+
+.hidden {
+  display: none;
+}
+
+/* Example sidebar styles */
+#logo-sidebar-btn {
+  width: 250px;
+  height: 100vh;
+  background-color: #006400;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  color: white;
+}

@@ -1,0 +1,164 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #006400; /* Dark Green for header background */
+    color: #fff; /* White text */
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #000; /* Use black for paragraphs */
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+    background-color: #004b00; /* Darker shade of green for navigation */
+    border-radius: 8px;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff; /* White text for nav links */
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #008000; /* Lighter green on hover */
+    color: #fff;
+    border-radius: 4px;
+}
+
+main {
+    margin: 20px 0;
+}
+
+section {
+    background: #f4f4f4; /* Light gray background for content sections */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.service-description {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.service-description img {
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.service-details li a {
+    color: #006400; /* Primary green for links */
+    text-decoration: none;
+}
+
+.service-details li a:hover {
+    text-decoration: underline;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff; /* White background for tables */
+    color: #000; /* Black text */
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #006400; /* Primary green for table headers */
+    color: #fff; /* White text */
+}
+
+td {
+    background-color: #f4f4f4; /* Light gray for table rows */
+}
+
+tr:nth-child(even) td {
+    background-color: #e6e6e6; /* Slightly darker gray for alternate rows */
+}
+
+/* Form Styling */
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #006400; /* Primary green for form labels */
+}
+
+form input, form select, form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #006400; /* Primary green for form borders */
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    border-color: #008000; /* Lighter green on focus */
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #006400; /* Primary green for buttons */
+    color: #fff; /* White text */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #008000; /* Lighter green on hover */
+}
+
+
