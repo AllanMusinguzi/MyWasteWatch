@@ -16,7 +16,7 @@
         </li>
         <li>
           <a href="/raise-a-request" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-            </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span></a>
+            </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Request</span></a>
         </li>
         <li>
           <a href="/logout" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span></a>
@@ -29,15 +29,12 @@
     <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14" style="font-size: 16px;">
       <div class="container max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <div class="max-w-7xl mx-auto">
-          <h1 class="text-3xl font-bold my-10">Dashboard</h1>
-           
-  
+          <h1 class="text-3xl center font-bold my-10" style="text-align: center;">Dashboard</h1>
+    
           <hr class="my-10">
   
           <div class="grid grid-cols-2 gap-x-20">
             <div>
-              <h2 class="text-2xl font-bold mb-4">Stats</h2>
-  
               <div class="grid grid-cols-2 gap-4">
                 <div class="col-span-2">
                   <div class="p-4 bg-green-100 rounded-xl">
@@ -51,47 +48,45 @@
                 </div>
                 <div class="p-4 bg-yellow-100 rounded-xl text-gray-800">
                   <div class="font-extrabold text-2xl leading-none"><%= result.total_pending %></div>
-                  <div class="mt-2 font-semibold">Pending Requests</div>
+                  <div class="mt-2 font-awesome">Pending Requests</div>
                 </div>
                 <div class="p-4 bg-yellow-100 rounded-xl text-gray-800">
                   <div class="font-extrabold text-2xl leading-none"><%= result.total_resolved %></div>
-                  <div class="mt-2 font-semibold">Completed Request</div>
+                  <div class="mt-2 font-awesome">Completed Request</div>
                 </div>
                 <div class="col-span-2">
                   <div class="p-4 bg-purple-100 rounded-xl text-gray-800">
                     <div class="font-extrabold text-xl leading-none"><%= result.total_unassigned_driver_requests %></div>
-                    <div class="mt-2 font-semibold">Unassinged driver on requests</div>
+                    <div class="mt-2 font-awesome">Unassinged driver on requests</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div>
-              <h2 class="text-2xl font-bold mb-3 mt-2">Based on request type</h2>
-  
+            <div> 
               <div class="space-y-4">
                 <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
                   <div class="flex justify-between">
                     <div class="font-bold text-2xl"><%= result.total_pickup_request %></div>
                   </div>
-                  <p class="font-semibold ">Pickup requests</p>
+                  <p class="font-awesome" style="font-size: large;">Pickup requests</p>
                 </div>
                 <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
                   <div class="flex justify-between">
                     <div class="font-bold text-2xl"><%= result.total_complaint_request %></div>
                   </div>
-                  <p class="font-semibold ">Complaint request</p>
+                  <p class="font-awesome" style="font-size: large;">Complaint request</p>
                 </div>
                 <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
                   <div class="flex justify-between">
                     <div class="font-bold text-2xl"><%= result.total_recycling_request %></div>
                   </div>
-                  <p class="font-semibold ">Recycling requests</p>
+                  <p class="font-awesome" style="font-size: large;">Recycling requests</p>
                 </div>
                 <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
                   <div class="flex justify-between">
                     <div class="font-bold text-2xl"><%= result.total_other_request %></div>
                   </div>
-                  <p class="font-semibold ">Others requests</p>
+                  <p class="font-awesome" style="font-size: large;">Others requests</p>
                 </div>
   
               </div>

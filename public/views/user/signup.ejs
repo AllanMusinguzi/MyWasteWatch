@@ -13,7 +13,7 @@
 <section class="container d-flex justify-content-center vh-100 " style="font-family: 'Ubuntu', sans-serif;">
     <div class="card border-0 p-4" style="box-shadow: 0 5px 10px rgba(0,0,0,0.9);max-width: 500px; font-family: 'Ubuntu', sans-serif;"> 
         <div class="card-body">
-            <h2 class="card-title text-center" style="color: #006400;">Welcome Back!</h2>
+            <h2 class="card-title text-center" style="color: #006400;">Lovely Having You!</h2>
             <p class="text-center" style="color: black;">Create an account</p> 
             
             <form action="/signup_process" method="post">
@@ -27,10 +27,6 @@
                             <label for="number" class="form-label" style="color: black;">Mobile Number</label>
                             <input type="tel" id="number" name="number" required class="form-control border-success">
                         </div>
-                        <div class="mb-4">
-                            <label for="email" class="form-label" style="color: black;">Email</label>
-                            <input type="email" id="email" name="email" required class="form-control border-success">
-                        </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="mb-4">
@@ -39,11 +35,24 @@
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label" style="color: black;">Password</label>
-                            <input type="password" id="password" name="password" required class="form-control border-success">
+                            <div class="input-group">
+                                <input type="password" id="password" name="password" required class="form-control border-success">
+                                <div class="input-group-append">
+                                    <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                                        <i class="fa fa-eye" style="color:#006400"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="mb-4">
+                            <label for="email" class="form-label" style="color: black">Email</label>
+                            <input type="email" id="email" name="email" required class="form-control border-success" style="width: 100%;">
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn" style="background-color: #006400; color: #ffffff; width: 100%;"><important>Sign up</important></button> 
+                <button type="submit" class="btn" style="background-color: #006400; color: #fff; width: 100%;"><important>Sign up</important></button> 
             </form>
             <div class="text-center mt-4">
                 <small style="color: black;">Already have an account? <a href="/login" style="color: #006400;"><important>Login</important></a></small> 
@@ -54,7 +63,23 @@
 <br><br>
 <%- include("../common/footer.ejs") %>
 
+
+<!-- Password visibility toggle script -->
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function () {
+        // Toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        
+        // Toggle the icon
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-

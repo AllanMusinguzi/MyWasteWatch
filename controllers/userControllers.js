@@ -45,7 +45,7 @@ exports.signupUser = async (req, res) => {
   } else {
     try {
       await db.collection("users").insertOne(entered_data);
-      res.send("You are signed Up Now <a href='/login'>Login Here</a>");
+      res.render("user/login.ejs", { message: "You are signed Up, Now Login Here." });
     } catch (err) {
       console.log(err);
     }
