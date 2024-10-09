@@ -21,7 +21,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      MONGO_URL: mongodb://admin:Admin%404040@mongodb:27017/waste_management_system?authSource=admin
+      MONGO_URL: mongodb://admin:Admin%404040@mongodb:27017/mwwmsdb?authSource=admin
     depends_on:
       - mongodb
 

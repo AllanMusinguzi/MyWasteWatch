@@ -3,57 +3,88 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="/public/css/styles.css" rel="stylesheet"> 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Intl-tel-input CSS for phone number formatting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <style>
     body {
         background-color: #fff;
     }
+
+    #map {
+        height: 300px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
 </style>
 <%- include("../common/navbar.ejs") %>
 <br><br><br>
-<section class="container d-flex justify-content-center vh-100 " style="font-family: 'Ubuntu', sans-serif;">
-    <div class="card border-0 p-4" style="box-shadow: 0 5px 10px rgba(0,0,0,0.9);max-width: 500px; font-family: 'Ubuntu', sans-serif;"> 
+<section class="container d-flex justify-content-center vh-100" style="font-family: 'Ubuntu', sans-serif;">
+    <div class="card border-0 p-4" style="box-shadow: 0 5px 10px rgba(0,0,0,0.9);max-width: 800px; font-family: 'Ubuntu', sans-serif;">         
+
         <div class="card-body">
-            <h2 class="card-title text-center" style="color: #006400;">Lovely Having You!</h2>
             <p class="text-center" style="color: black;">Create an account</p> 
             
             <form action="/signup_process" method="post">
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="mb-4"> 
-                            <label for="name" class="form-label" style="color: black;">Name</label> 
-                            <input type="text" id="name" name="name" required class="form-control border-success"> 
-                        </div>
-                        <div class="mb-4">
-                            <label for="number" class="form-label" style="color: black;">Mobile Number</label>
-                            <input type="tel" id="number" name="number" required class="form-control border-success">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="mb-4">
-                            <label for="address" class="form-label" style="color: black;">Address</label>
-                            <input type="text" id="address" name="address" required class="form-control border-success">
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="form-label" style="color: black;">Password</label>
-                            <div class="input-group">
-                                <input type="password" id="password" name="password" required class="form-control border-success">
-                                <div class="input-group-append">
-                                    <button type="button" id="togglePassword" class="btn btn-outline-secondary">
-                                        <i class="fa fa-eye" style="color:#006400"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="mb-4">
-                            <label for="email" class="form-label" style="color: black">Email</label>
-                            <input type="email" id="email" name="email" required class="form-control border-success" style="width: 100%;">
+
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label" style="color: black">Email</label>
+                    <input type="email" id="email" name="email" required class="form-control border-success" style="width: 100%;">
+                </div>
+
+                <!-- Phone Number -->
+                <div class="mb-3">
+                    <label for="number" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="number" placeholder="Enter your phone number" required>
+                </div>
+
+                <!-- Country Selection -->
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <select id="country" name="country" class="form-select" required>
+                        <option value="" disabled selected>Select your country</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Zambia">Zambia</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                </div>
+
+                <!--Password-->
+                <div class="mb-3">
+                    <label for="password" class="form-label" style="color: black;">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" required class="form-control border-success">
+                        <div class="input-group-append">
+                            <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                                <i class="fa fa-eye" style="color:#006400"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
+
+                <!-- Submit Button -->
                 <button type="submit" class="btn" style="background-color: #006400; color: #fff; width: 100%;"><important>Sign up</important></button> 
             </form>
+
             <div class="text-center mt-4">
                 <small style="color: black;">Already have an account? <a href="/login" style="color: #006400;"><important>Login</important></a></small> 
             </div>
@@ -62,7 +93,6 @@
 </section>
 <br><br>
 <%- include("../common/footer.ejs") %>
-
 
 <!-- Password visibility toggle script -->
 <script>
@@ -80,6 +110,24 @@
     });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Intl-tel-input JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+<script>
+// Initialize intl-tel-input for phone number formatting
+const phoneInputField = document.querySelector("#number");
+const phoneInput = window.intlTelInput(phoneInputField, {
+    initialCountry: "auto",
+    geoIpLookup: function(success, failure) {
+        $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            const countryCode = (resp && resp.country) ? resp.country : "us";
+            success(countryCode);
+        });
+    },
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+});
+</script>

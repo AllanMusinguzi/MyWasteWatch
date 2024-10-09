@@ -8,7 +8,7 @@ module.exports = {
     connectToServer: async function (callback) {
         try {
             const client = await mongo_client.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-            _db = client.db("waste_management_system");
+            _db = client.db("mwwmsdb");
             console.log("Hey, you're connected to MongoDB! 😂😹🙌👊");
 
             // Create a user table if it does not exist
