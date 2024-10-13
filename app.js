@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
 const _db = require("./config/db");
 const indexRoutes = require("./routes/index");
+const csrf = require('csurf');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -16,6 +18,19 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "public/views"));
 app.use(express.static(path.join(__dirname, "public/")));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
+
+// Initialize CSRF protection (before defining routes)
+const csrfProtection = csrf({ cookie: true });
+
+// Apply CSRF protection globally or on specific routes
+app.use(csrfProtection);
+
+// Middleware to pass CSRF token to all views
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
 // Routes
 app.use("/", indexRoutes);
@@ -25,11 +40,11 @@ app.get('/services', (req, res) => {
 });
 
 app.get('/about-us', (req, res) => {
-    res.render('about-us')
+    res.render('about-us');
 });
 
 app.get('/contact-us', (req, res) => {
-    res.render('contact-us')
+    res.render('contact-us');
 });
 
 app.post("/send-email", (req, res) => {
@@ -58,6 +73,7 @@ app.post("/send-email", (req, res) => {
     });
 });
 
+// 404 Route
 app.get("*", (req, res) => {
     res.render("404.ejs");
 });

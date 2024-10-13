@@ -2,6 +2,43 @@
 <%- include("../common/nav.ejs") %>
 
 <link rel="stylesheet" href="/css/styles.css">
+<script src="/js/admin.js" defer></script>
+
+<style>
+    .modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        transition: all 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+    }
+
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
 
 <!--Toggle Button-->
 <button id="toggle-btn" class="btn btn-success d-md-none mt-3 ms-3" style="z-index: 1000;">Toggle Sidebar</button>
@@ -13,89 +50,121 @@
         <a href="dashboard" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"><path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" /><path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" /></svg><span class="ms-3 text-xl">Dashboard</span></a>
       </li>
       <li>
-        <a href="/admin/allRequests" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"> <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">All Requests</span></a>
+        <a href="/admin/allRequests" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"> <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class=" ms-3 text-xl whitespace-nowrap">Requests</span></a>
       </li>
       <li>
         <a href="/admin/createDriver" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span></a>
+          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap"> Create Driver</span></a>
       </li>
       <li>
         <a href="/admin/allDrivers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"> <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">All Drivers</span>
+          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Drivers</span>
         </a>
       </li>
+      <li>
+        <a href="/admin/allUsers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"> <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
+          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Users</span>
+        </a>
+      </li>      
       <li>
         <a href="/admin/logout" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span></a>
       </li>
     </ul>
   </div>
 </aside>
-<div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14">
-      <div class="container max-w-7xl mx-auto p-6">
-          <h1 class="text-center text-5xl mb-6">All Drivers</h1>
-          <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" style="font-size: 16px; color: #000; background-color: #fff;">
-                  <thead>
-                      <tr>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Name</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Email</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Phone</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">License</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Vehicle</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Vehicle Type</th>
-                          <th class="px-6 py-3 text-left text-xl font-bold text-dark capitalize tracking-wider">Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody class="bg-white divide-y divide-gray-200 dark:bg-white dark:divide-gray-700">
-                      <% drivers.forEach(driver => { %>
-                      <tr>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg font-bold text-gray-900 dark:text-dark"><%= driver.name %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark"><%= driver.email %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark"><%= driver.phone %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark"><%= driver.license %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark"><%= driver.vehicle %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark"><%= driver.vehicleType %></td>
-                          <td class="px-6 py-4 whitespace-nowrap text-lg text-dark dark:text-dark">
-                              <button id="driver-<%= driver._id %>" onclick="deleteDriver(event)" class="bg-red-700 text-white py-1 px-3 capitalize rounded-full focus:outline-none focus:bg-red-800">Delete</button>
-                          </td>
-                      </tr>
-                      <% }); %>
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
+
+<main class="ml-64 p-4">
+    <h1 class="text-3xl font-bold">All Drivers</h1>
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-300">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="border border-gray-300 p-2">Driver Name</th>
+                    <th class="border border-gray-300 p-2">Contact</th>
+                    <th class="border border-gray-300 p-2">Email</th>
+                    <th class="border border-gray-300 p-2">License Number</th>
+                    <th class="border border-gray-300 p-2">Vehicle Number</th>
+                    <th class="border border-gray-300 p-2">Vehicle Type</th>
+                    <th class="border border-gray-300 p-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% drivers.forEach(driver => { %>
+                    <tr>
+                        <td class="border border-gray-300 p-2"><%= driver.name %></td>
+                        <td class="border border-gray-300 p-2"><%= driver.phone %></td>
+                        <td class="border border-gray-300 p-2"><%= driver.email %></td>
+                        <td class="border border-gray-300 p-2"><%= driver.license %></td>
+                        <td class="border border-gray-300 p-2"><%= driver.vehicle %></td>
+                        <td class="border border-gray-300 p-2"><%= driver.vehicleType %></td>
+                        <td class="border border-gray-300 p-2">
+                            <button onclick="deleteDriver('<%= driver._id %>')" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <% if (pagination.totalPages > 1) { %>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <% if (pagination.hasPrevPage) { %>
+                        <li><a href="/admin/allDrivers?page=<%= pagination.prevPage %>" style="color: #006400;" class="page-link">Previous</a></li>
+                    <% } %>
+                    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                        <li class="<%= i === pagination.currentPage ? 'active' : '' %>">
+                            <a href="/admin/allDrivers?page=<%= i %>" style="color: #006400;" class="page-link"><%= i %></a>
+                        </li>
+                    <% } %>
+                    <% if (pagination.hasNextPage) { %>
+                        <li><a href="/admin/allDrivers?page=<%= pagination.nextPage %>" style="color: #006400;" class="page-link">Next</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        <% } %>
+    </div>
+</main>
+
+<!-- Modal for confirmation -->
+<div id="deleteModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <p>Are you sure you want to delete this driver?</p>
+        <button id="confirmDelete" class="btn btn-danger">Delete</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
 </div>
 
 <script>
-  function deleteDriver(event) {
-      event.preventDefault();
+    let driverIdToDelete;
 
-      const driverId = event.target.id.replace('driver-', '');
+    function deleteDriver(driverId) {
+        driverIdToDelete = driverId; // Store the driver ID to delete
+        document.getElementById('deleteModal').classList.remove('hidden'); // Show the modal
+    }
 
-      if (confirm('Are you sure you want to delete this driver?')) {
-          fetch(`/drivers/${driverId}`, {  //make a request to the server
-              method: 'DELETE',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          })
-          .then(response => {
-              if (response.ok) {
-                  event.target.closest('tr').remove();
-              } else {
-                  alert('Failed to delete driver.');
-              }
-          })
-          .catch(error => {
-              console.error('Error:', error);
-              alert('An error occurred while deleting the driver.');
-          });
-      }
-  }
+    document.getElementById('confirmDelete').onclick = function() {
+        // Perform the deletion
+        fetch(`/admin/deleteDriver/${driverIdToDelete}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('input[name="_csrf"]').value // CSRF Token
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload(); // Refresh the page after successful deletion
+            } else {
+                alert('Error deleting driver');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    };
+
+    function closeModal() {
+        document.getElementById('deleteModal').classList.add('hidden'); // Hide the modal
+    }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<%- include("../common/footer.ejs") %>

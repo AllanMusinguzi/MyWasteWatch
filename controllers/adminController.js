@@ -126,7 +126,15 @@ exports.assignDriver = async (req, res) => {
     let db = _db.getDb();
 
     try {
-        let driverName = await db.collection("drivers").find({ _id: new ObjectId(driverId) }).project({ _id: 0, name: 1 }).toArray();
+        let driverName = await db.collection("drivers")
+            .find({ _id: new ObjectId(driverId) })
+            .project({ _id: 0, name: 1 })
+            .toArray();
+        
+        if (!driverName.length) {
+            return res.status(404).json({ isOK: false, msg: "Driver not found." });
+        }
+
         driverName = driverName[0].name;
 
         let data = await db.collection("requests").findOneAndUpdate(
@@ -147,14 +155,11 @@ exports.assignDriver = async (req, res) => {
                 driverName: data.value.assignedDriver,
             });
         } else {
-            res.json({
-                isOK: false,
-                msg: "Something went wrong.",
-            });
+            res.status(500).json({ isOK: false, msg: "Failed to assign driver." });
         }
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occurred while assigning the driver.");
+        res.status(500).json({ isOK: false, msg: "An error occurred while assigning the driver." });
     }
 };
 
@@ -174,20 +179,17 @@ exports.unassignDriver = async (req, res) => {
             { returnDocument: "after" }
         );
 
-        if (result.value.assignedDriver === "" && result.value.assignedDriverId === "") {
+        if (result.value && result.value.assignedDriver === "" && result.value.assignedDriverId === "") {
             res.json({
                 isUnassigned: true,
                 msg: "The driver has been unassigned successfully.",
             });
         } else {
-            res.json({
-                isUnassigned: false,
-                msg: "Something went wrong.",
-            });
+            res.status(500).json({ isUnassigned: false, msg: "Failed to unassign driver." });
         }
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occurred while unassigning the driver.");
+        res.status(500).json({ isUnassigned: false, msg: "An error occurred while unassigning the driver." });
     }
 };
 
@@ -208,22 +210,20 @@ exports.rejectRequest = async (req, res) => {
             { returnDocument: "after" }
         );
 
-        if (result.value.status === "rejected") {
+        if (result.value && result.value.status === "rejected") {
             res.json({
                 isRejected: true,
                 msg: "The request has been rejected successfully",
             });
         } else {
-            res.json({
-                isRejected: false,
-                msg: "Something went wrong.",
-            });
+            res.status(500).json({ isRejected: false, msg: "Failed to reject request." });
         }
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occurred while rejecting the request.");
+        res.status(500).json({ isRejected: false, msg: "An error occurred while rejecting the request." });
     }
 };
+
 
 exports.getCreateDriverPage = (req, res) => {
     res.render("admin/createDriver.ejs");
@@ -259,8 +259,33 @@ exports.createDriver = async (req, res) => {
 exports.getAllDrivers = async (req, res) => {
     try {
         let db = _db.getDb();
-        let result = await db.collection("drivers").find({}).project({ password: 0 }).toArray();
-        res.render("admin/allDrivers.ejs", { drivers: result });
+        const page = parseInt(req.query.page) || 1; // Get the current page, default to 1
+        const limit = 20; // Set the number of items per page
+        const skip = (page - 1) * limit; // Calculate the number of items to skip
+
+        const totalDrivers = await db.collection("drivers").countDocuments(); // Count total drivers
+        const totalPages = Math.ceil(totalDrivers / limit); // Calculate total pages
+
+        let result = await db.collection("drivers")
+            .find({})
+            .project({ password: 0 })
+            .skip(skip) // Skip the previous pages
+            .limit(limit) // Limit to the number of drivers per page
+            .toArray();
+
+        const pagination = {
+            totalPages: totalPages,
+            currentPage: page,
+            hasPrevPage: page > 1,
+            hasNextPage: page < totalPages,
+            prevPage: page - 1,
+            nextPage: page + 1,
+        };
+
+        res.render("admin/allDrivers.ejs", {
+            drivers: result,
+            pagination: pagination // Passing the pagination object
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send("An error occurred while fetching drivers.");
@@ -269,15 +294,95 @@ exports.getAllDrivers = async (req, res) => {
 
 exports.deleteDriver = async (req, res) => {
     try {
-        let driverId = req.query.driverId;
+        let driverId = req.params.id; 
         let db = _db.getDb();
-        await db.collection("drivers").deleteOne({ _id: new ObjectId(driverId) });
-        res.send("Driver deleted successfully");
+
+        const driver = await db.collection("drivers").findOne({ _id: new ObjectId(driverId) });
+        
+        if (!driver) {
+            return res.status(404).send("Driver not found"); 
+        }
+
+        const result = await db.collection("drivers").deleteOne({ _id: new ObjectId(driverId) });
+
+        if (result.deletedCount === 1) {
+            res.send("Driver deleted successfully"); 
+        } else {
+            res.status(500).send("An error occurred while deleting the driver."); 
+        }
     } catch (err) {
         console.error(err);
-        res.status(500).send("An error occurred while deleting the driver.");
+        res.status(500).send("An error occurred while deleting the driver."); 
     }
 };
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        let db = _db.getDb();
+        const page = parseInt(req.query.page) || 1; 
+        if (isNaN(page) || page < 1) {
+            return res.status(400).send("Invalid page number.");
+        }
+        
+        const limit = 25; 
+        const skip = (page - 1) * limit; 
+
+        const total_users = await db.collection("users").countDocuments(); 
+        const totalPages = Math.ceil(total_users / limit); 
+
+        let result = await db.collection("users")
+            .find({})
+            .project({ password: 0 }) // Exclude password from results
+            .skip(skip) 
+            .limit(limit) 
+            .toArray();
+
+        const pagination = {
+            totalPages: totalPages,
+            currentPage: page,
+            hasPrevPage: page > 1,
+            hasNextPage: page < totalPages,
+            prevPage: page > 1 ? page - 1 : null,
+            nextPage: page < totalPages ? page + 1 : null,
+        };
+
+        res.render("admin/allUsers.ejs", {
+            users: result,
+            pagination: pagination
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred while fetching users.");
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id; 
+        const db = _db.getDb();
+
+        // Check if user exists
+        const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
+        
+        if (!user) {
+            return res.status(404).send("User not found"); 
+        }
+
+        // Attempt to delete the user
+        const result = await db.collection("users").deleteOne({ _id: new ObjectId(userId) });
+
+        // Check if deletion was successful
+        if (result.deletedCount === 1) {
+            return res.send("User deleted successfully"); 
+        } else {
+            return res.status(500).send("An error occurred while deleting the user."); 
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send("An error occurred while deleting the user."); 
+    }
+};
+
 /*
 exports.getAdminDashboard = async(req, res) => {
     try {

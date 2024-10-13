@@ -594,3 +594,23 @@ footer {
     max-width: 90em;
     margin: auto;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #000; /* Change to your preferred color */
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2; /* Light gray background for headers */
+  font-weight: bold;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9; /* Highlight on hover */
+}

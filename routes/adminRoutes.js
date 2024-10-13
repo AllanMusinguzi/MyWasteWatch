@@ -24,7 +24,9 @@ router.get("/reject-request", authMiddleware.isAdminLoggedIn, requestMiddleware.
 router.get("/createDriver", authMiddleware.isAdminLoggedIn, adminController.getCreateDriverPage);
 router.post("/createDriver", authMiddleware.isAdminLoggedIn, adminController.createDriver);
 router.get("/allDrivers", authMiddleware.isAdminLoggedIn, adminController.getAllDrivers);
-router.get("/delete-driver/:id", authMiddleware.isAdminLoggedIn, adminController.deleteDriver);
+router.delete("/delete-driver/:id", authMiddleware.isAdminLoggedIn, adminController.deleteDriver);
+router.get("/allUsers", authMiddleware.isAdminLoggedIn, adminController.getAllUsers);
+router.delete("/deleteUser/:id", authMiddleware.isAdminLoggedIn, adminController.deleteDriver);
 router.get("/logout", adminController.logoutAdmin);
 
 
