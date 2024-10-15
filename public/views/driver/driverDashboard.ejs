@@ -2,7 +2,35 @@
 <%- include("../common/nav.ejs") %>
 
 <link rel="stylesheet" href="/css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #006400;
+  }
+  .stat-label {
+    font-size: 14px;
+    font-family: 'Ubuntu', sans-serif;
+    color: #000;
+  }
+</style>
 
 <!--Toggle Button-->
 <button id="toggle-btn" class="btn btn-success d-md-none mt-3 ms-3" style="z-index: 1000;">Toggle Sidebar</button>
@@ -11,122 +39,263 @@
   <div class="h-full px-3 pb-4 overflow-y-auto">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="dashboard" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"><path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" /><path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" /></svg><span class="ms-3 text-xl">Dashboard</span></a>
-      </li>
-      <li>
-        <a href="/driver/pending-requests" class="sidebar-link" ><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"> <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Requests</span></a>
-      </li>
-      <li>
-        <a href="/driver/history" class="sidebar-link"><svg class=" svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />  </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">History</span>
+        <a href="dashboard" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+            <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+            <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+          </svg>
+          <span class="ms-3 text-xl">Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="logout" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span></a>
+        <a href="/driver/pending-requests" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+            <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Requests</span>
+        </a>
+      </li>
+      <li>
+        <a href="/driver/history" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">History</span>
+        </a>
+      </li>
+      <li>
+        <a href="logout" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span>
+        </a>
       </li>
     </ul>
   </div>
 </aside>
 
-
 <div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14" style="font-size: 16px;">
-    <div class="max-w-7xl mx-auto">
-      <div class="bg-white rounded-3xl p-8 mb-5">
-        <h1 class="text-3xl font-bold my-10" style="text-align: center; padding: 5px;">Dashboard</h1>
-         
-        <hr class="my-10">
-  
-        <div class="grid grid-cols-2 gap-x-20">
-          <div> 
-            <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
-                <div class="p-4 bg-green-100 rounded-xl">
-                  <div class="font-bold text-xl text-gray-800 leading-none">Total Requests</div>
-                  <div class="mt-5">
-                    <p  class="inline-flex items-center justify-center py-2 px-12 rounded-xl bg-white text-gray-800 text-lg font-extrabold transition">
-                     <%= result.total_requests %>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl text-gray-800">
-                <div class="font-extrabold text-2xl leading-none"><%= result.total_pending %></div>
-                <div class="mt-2 font-awesome">Pending Requests</div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl text-gray-800">
-                <div class="font-extrabold text-2xl leading-none"><%= result.total_resolved %></div>
-                <div class="mt-2 font-awesome">Completed Request</div>
-              </div>
-              <div class="col-span-2">
-                <div class="p-4 bg-purple-100 rounded-xl text-gray-800">
-                  <div class="font-extrabold text-xl leading-none"><%= result.total_rejected %></div>
-                  <div class="mt-2 font-awesome">Total Rejected</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="space-y-4">
-              <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
-                <div class="flex justify-between">
-                  <div class="font-bold text-2xl"><%= result.total_pickup_request %></div>
-                </div>
-                <p class="font-awesome" style="font-size: large;">Pickup requests</p>
-              </div>
-              <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
-                <div class="flex justify-between">
-                  <div class="font-bold text-2xl"><%= result.total_complaint_request %></div>
-                </div>
-                <p class="font-awesome" style="font-size: large;">Complaint request</p>
-              </div>
-              <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
-                <div class="flex justify-between">
-                  <div class="font-bold text-2xl"><%= result.total_recycling_request %></div>
-                </div>
-                <p class="font-awesome" style="font-size: large;">Recycling requests</p>
-              </div>
-              <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
-                <div class="flex justify-between">
-                  <div class="font-bold text-2xl"><%= result.total_other_request %></div>
-                </div>
-                <p class="font-awesome" style="font-size: large;">Others requests</p>
-              </div>
-  
-            </div>
-          </div>
+  <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14">
+    <h1 class="text-3xl font-bold mb-6" style="text-align: center;">Driver Dashboard</h1>
+    
+    <!-- Overview Statistics -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Overview</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_requests %></div>
+          <div class="stat-label">Total Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_pending %></div>
+          <div class="stat-label">Pending Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_resolved %></div>
+          <div class="stat-label">Completed Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_rejected %></div>
+          <div class="stat-label">Rejected Requests</div>
         </div>
       </div>
+    </div>
+    
+    <!-- Request Type Distribution -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Request Type Distribution</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <canvas id="requestTypeChart"></canvas>
+        </div>
+        <div>
+          <canvas id="completionRateChart"></canvas>
+        </div>
+      </div>      
+    </div>
+    
+    <!-- Performance Metrics -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Performance Metrics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <canvas id="requestTimelineChart"></canvas>
+        </div>
+        <div>
+          <canvas id="averageResponseTimeChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Request Type</th>
+            <th class="px-4 py-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Populate this with actual recent activity data -->
+          <tr>
+            <td class="border px-4 py-2">2023-10-15</td>
+            <td class="border px-4 py-2">Pickup</td>
+            <td class="border px-4 py-2">Completed</td>
+          </tr>
+          <tr>
+            <td class="border px-4 py-2">2023-10-14</td>
+            <td class="border px-4 py-2">Complaint</td>
+            <td class="border px-4 py-2">Pending</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 
-
-<!-- JavaScript to toggle sidebar on small screens -->
 <script>
+  // Toggle sidebar functionality
   const toggleBtn = document.getElementById('toggle-btn');
   const sidebar = document.getElementById('logo-sidebar');
 
   toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('show');
+    sidebar.classList.toggle('-translate-x-full');
   });
-</script> 
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const toggleButton = document.querySelector('[data-drawer-toggle="logo-sidebar"]');
-  const sidebar = document.getElementById('logo-sidebar');
+  // Chart.js configurations
+  // Request Type Distribution
+  const requestTypeCtx = document.getElementById('requestTypeChart').getContext('2d');
+  new Chart(requestTypeCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Pickup', 'Complaint', 'Recycling', 'Others'],
+      datasets: [{
+        data: [
+          <%= result.total_pickup_request %>, 
+          <%= result.total_complaint_request %>, 
+          <%= result.total_recycling_request %>, 
+          <%= result.total_other_request %>
+        ],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Request Type Distribution'
+        }
+      }
+    }
+  });
 
-  if (toggleButton && sidebar) {
-    toggleButton.addEventListener('click', function() {
-      sidebar.classList.toggle('hidden');
-    });
-  }
-});
+  // Request Status Timeline
+  const requestTimelineCtx = document.getElementById('requestTimelineChart').getContext('2d');
+  new Chart(requestTimelineCtx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Completed Requests',
+        data: [65, 59, 80, 81, 56, 55, 40, 65, 59, 80, 81, 56],
+        borderColor: '#36A2EB',
+        tension: 0.1
+      }, {
+        label: 'Pending Requests',
+        data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86],
+        borderColor: '#FFCE56',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Request Status Timeline'
+        }
+      }
+    }
+  });
+
+  // Completion Rate
+  const completionRateCtx = document.getElementById('completionRateChart').getContext('2d');
+  new Chart(completionRateCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Completed', 'Pending', 'Rejected'],
+      datasets: [{
+        data: [
+          <%= result.total_resolved %>,
+          <%= result.total_pending %>,
+          <%= result.total_rejected %>
+        ],
+        backgroundColor: ['#4BC0C0', '#FFCE56', '#FF6384']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Request Completion Rate'
+        }
+      }
+    }
+  });
+
+  // Average Response Time
+  const avgResponseTimeCtx = document.getElementById('averageResponseTimeChart').getContext('2d');
+  new Chart(avgResponseTimeCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Pickup', 'Complaint', 'Recycling', 'Others'],
+      datasets: [{
+        label: 'Average Response Time (hours)',
+        data: [2.5, 1.8, 3.2, 2.1],
+        backgroundColor: [
+        '#FF6384', 
+        '#36A2EB', 
+        '#FFCE56', 
+        '#4BC0C0' 
+      ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: 'Average Response Time by Request Type'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Hours'
+          }
+        }
+      }
+    }
+  });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
-</html>

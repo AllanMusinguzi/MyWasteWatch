@@ -14,19 +14,27 @@ const app = express();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Setting up view engine and views directory
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "public/views"));
+
+// Serving static files from the public directory
 app.use(express.static(path.join(__dirname, "public/")));
+
+// Cookie parser for handling cookies
 app.use(cookieParser());
+
+// Method Override middleware (for supporting PUT and DELETE via POST requests)
 app.use(methodOverride('_method'));
 
-// Initialize CSRF protection (before defining routes)
+// CSRF Protection Middleware: Initialize CSRF protection (before defining routes)
 const csrfProtection = csrf({ cookie: true });
 
-// Apply CSRF protection globally or on specific routes
+// Apply CSRF protection to all routes (you can also selectively apply to only POST routes if needed)
 app.use(csrfProtection);
 
-// Middleware to pass CSRF token to all views
+// Middleware to pass the CSRF token to every rendered view (so it's available in all EJS forms)
 app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
@@ -35,6 +43,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/", indexRoutes);
 
+// Services, About Us, and Contact Us pages
 app.get('/services', (req, res) => {
     res.render('services');
 });
@@ -47,6 +56,7 @@ app.get('/contact-us', (req, res) => {
     res.render('contact-us');
 });
 
+// Handling the email sending with CSRF protection for the POST request
 app.post("/send-email", (req, res) => {
     const { name, email, message } = req.body;
 
@@ -73,7 +83,7 @@ app.post("/send-email", (req, res) => {
     });
 });
 
-// 404 Route
+// 404 Page (catch-all for undefined routes)
 app.get("*", (req, res) => {
     res.render("404.ejs");
 });
@@ -89,3 +99,5 @@ _db.connectToServer((err) => {
         });
     }
 });
+
+module.exports = app;

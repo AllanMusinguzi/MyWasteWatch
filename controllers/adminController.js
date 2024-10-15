@@ -337,18 +337,20 @@ exports.getAllUsers = async (req, res) => {
             .limit(limit) 
             .toArray();
 
+        // Define pagination object
         const pagination = {
             totalPages: totalPages,
-            currentPage: page,
+            currentPage: page,  
             hasPrevPage: page > 1,
             hasNextPage: page < totalPages,
             prevPage: page > 1 ? page - 1 : null,
             nextPage: page < totalPages ? page + 1 : null,
         };
 
+        // Pass the users and pagination object to the EJS template
         res.render("admin/allUsers.ejs", {
             users: result,
-            pagination: pagination
+            pagination: pagination, // Pass pagination object directly
         });
     } catch (err) {
         console.error(err);

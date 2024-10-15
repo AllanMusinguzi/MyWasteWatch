@@ -23,31 +23,32 @@
     <div class="card border-0 p-4" style="box-shadow: 0 5px 10px rgba(0,0,0,0.9);max-width: 800px; font-family: 'Ubuntu', sans-serif;">         
 
         <div class="card-body">
-            <p class="text-center" style="color: black;">Create an account</p> 
+            <p class="text-center text-2xl font-bold" style="color: #006400;">Create an account</p> 
             
             <form action="/signup_process" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                 <!-- Full Name -->
                 <div class="mb-3">
-                    <label for="fullName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control border-success" id="name" name="name" placeholder="Enter your full name" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label" style="color: black">Email</label>
-                    <input type="email" id="email" name="email" required class="form-control border-success" style="width: 100%;">
+                    <input type="email" id="email" name="email" required class="form-control border-success" placeholder="name@example.com" style="width: 100%;">
                 </div>
 
                 <!-- Phone Number -->
                 <div class="mb-3">
                     <label for="number" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="number" placeholder="Enter your phone number" required>
+                    <input type="tel" class="form-control border-success" id="number" placeholder="Enter your phone number" required>
                 </div>
 
                 <!-- Country Selection -->
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
-                    <select id="country" name="country" class="form-select" required>
+                    <select id="country" name="country" class="form-select border-success" required>
                         <option value="" disabled selected>Select your country</option>
                         <option value="Uganda">Uganda</option>
                         <option value="Kenya">Kenya</option>
@@ -72,7 +73,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label" style="color: black;">Password</label>
                     <div class="input-group">
-                        <input type="password" id="password" name="password" required class="form-control border-success">
+                        <input type="password" id="password" name="password" placeholder="Enter you password" required class="form-control border-success">
                         <div class="input-group-append">
                             <button type="button" id="togglePassword" class="btn btn-outline-secondary">
                                 <i class="fa fa-eye" style="color:#006400"></i>
@@ -82,11 +83,11 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn" style="background-color: #006400; color: #fff; width: 100%;"><important>Sign up</important></button> 
+                <button type="submit" class="btn" style="background-color: #006400; color: #fff; width: 100%; font: bold;"><important class="font-bold">Sign up</important></button> 
             </form>
 
             <div class="text-center mt-4">
-                <small style="color: black;">Already have an account? <a href="/login" style="color: #006400;"><important>Login</important></a></small> 
+                <small style="color: black;">Already have an account? <a href="/login" style="color: #006400; text-decoration: none;" class="font-bold">Login</a></small> 
             </div>
         </div>
     </div>

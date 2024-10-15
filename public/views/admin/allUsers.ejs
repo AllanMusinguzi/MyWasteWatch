@@ -5,40 +5,90 @@
 <script src="/js/admin.js" defer></script>
 
 <style>
-  .modal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    transition: all 0.3s ease;
-  }
+    /* Modal styling */
+    .modal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+    
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 400px;
+    }
 
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    width: 400px; /* Set a width for the modal */
-  }
+    .form-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
 
-  .close-btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-    font-size: 20px;
-  }
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+    }
 
-  .hidden {
-    display: none;
-  }
+    .form-control:focus {
+        border-color: #006400;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 100, 0, 0.5);
+    }
+
+    .btn {
+        background-color: #006400;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .btn:hover {
+        background-color: #005700;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group-append {
+        margin-left: -1px;
+    }
+
+    .close-btn {
+        cursor: pointer;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .close-btn:hover {
+        color: #d00;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+        .modal-content {
+            width: 90%;
+            padding: 15px;
+        }
+    }
 
   /* Pagination styles */
   .pagination-nav {
@@ -72,28 +122,96 @@
   .pagination a:hover {
     color: #006400; /* Updated hover color */
   }
+
+  /* Ensure main content is visible and not cut off */
+  main {
+    margin-top: 60px; /* Space for title */
+    min-height: calc(100vh - 100px); /* Ensure space for title and other elements */
+  }
+
+  /* Button styles */
+  .btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    color: black;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
 </style>
 
-<!--Toggle Button-->
+<!-- Toggle Button -->
 <button id="toggle-btn" class="btn btn-success d-md-none mt-3 ms-3" style="z-index: 1000;">Toggle Sidebar</button>
 
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-20 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
   <div class="h-full px-3 pb-4 overflow-y-auto">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="dashboard" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"><path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" /><path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" /></svg><span class="ms-3 text-xl">Dashboard</span></a>
+        <a href="dashboard" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2L2 9h3v7h10V9h3L10 2z" />
+          </svg>
+          <span class="ms-3 text-xl">Dashboard</span>
+        </a>
       </li>
       <li>
-        <a href="/admin/allRequests" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"><path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class="ms-3 text-xl whitespace-nowrap">Requests</span></a>
+        <a href="/admin/allRequests" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M1 3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3z" />
+          </svg>
+          <span class="ms-3 text-xl whitespace-nowrap">Requests</span>
+        </a>
       </li>
       <li>
-        <a href="/admin/createDriver" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap"> Create Driver</span></a>
+        <a href="/admin/createDriver" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a8 8 0 0 0-8 8h2a6 6 0 1 1 12 0h2a8 8 0 0 0-8-8zM4 16h12v2H4v-2z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span>
+        </a>
       </li>
       <li>
-        <a href="/admin/allDrivers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"><path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Drivers</span></a>
+        <a href="/admin/allDrivers" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a8 8 0 0 0-8 8h2a6 6 0 1 1 12 0h2a8 8 0 0 0-8-8zM4 16h12v2H4v-2z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Drivers</span>
+        </a>
       </li>
       <li>
-        <a href="/admin/allUsers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"><path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Users</span></a>
+        <a href="/admin/allUsers" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-6 6a6 6 0 0 1 12 0H4z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Users</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/logout" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span>
+        </a>
       </li>
     </ul>
   </div>
@@ -112,119 +230,156 @@
         <th class="px-4 py-2">Contact</th>
         <th class="px-4 py-2">Email</th>
         <th class="px-4 py-2">Address</th>
+        <th class="px-4 py-2">Country</th>
         <th class="px-4 py-2">Actions</th>
       </tr>
     </thead>
     <tbody>
       <% users.forEach(user => { %>
       <tr>
-        <td class="border px-4 py-2"><%= user.fullName %></td>
-        <td class="border px-4 py-2"><%= user.contact %></td>
+        <td class="border px-4 py-2"><%= user.name %></td>
+        <td class="border px-4 py-2"><%= user.number %></td>
         <td class="border px-4 py-2"><%= user.email %></td>
         <td class="border px-4 py-2"><%= user.address %></td>
+        <td class="border px-4 py-2"><%= user.country %></td>
         <td class="border px-4 py-2">
-          <a href="/admin/editUser/<%= user.id %>" class="btn btn-warning">Edit</a>
-          <button class="btn btn-danger" onclick="deleteUser('<%= user.id %>')">Delete</button>
+          <button class="btn btn-warning">Edit</button>
+          <button class="btn btn-danger">Delete</button>
         </td>
       </tr>
       <% }); %>
     </tbody>
   </table>
 
-  <!-- Pagination -->
   <div class="pagination-nav">
     <ul class="pagination">
-      <% if (currentPage > 1) { %>
-        <li><a href="/admin/allUsers?page=<%= currentPage - 1 %>">Previous</a></li>
-      <% } %>
-      <% for (let i = 1; i <= totalPages; i++) { %>
-        <li class="<%= currentPage === i ? 'active' : '' %>">
+      <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+        <li class="<%= pagination.currentPage === i ? 'active' : '' %>">
           <a href="/admin/allUsers?page=<%= i %>"><%= i %></a>
         </li>
       <% } %>
-      <% if (currentPage < totalPages) { %>
-        <li><a href="/admin/allUsers?page=<%= currentPage + 1 %>">Next</a></li>
-      <% } %>
     </ul>
-  </div>
+  </div>  
 
-  <!-- Add User Modal -->
-  <div id="addUserModal" class="modal hidden">
+  <!-- Modal for Adding User -->
+  <div id="userModal" class="modal hidden">
     <div class="modal-content">
-      <span class="close-btn" id="closeModal">&times;</span>
-      <h3>Add New User</h3>
-      <form id="addUserForm">
-        <div>
-          <label for="name">Full Name:</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div>
-          <label for="number">Contact:</label>
-          <input type="text" id="number" name="number" required>
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-          <label for="address">Address:</label>
-          <input type="text" id="address" name="address" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Add User</button>
-      </form>
-    </div>
-  </div>
+        <span class="close-btn" id="closeModal">&times;</span>
+        <h2 class="text-xl font-bold">Add User</h2>
+        <form action="/signup_process" method="post" id="addUserForm">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" required class="form-control" placeholder="name@example.com" style="width: 100%;">
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3">
+                <label for="number" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="number" name="number" placeholder="Enter your phone number" required>
+            </div>
+
+            <!-- Country Selection -->
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <select id="country" name="country" class="form-control" required>
+                    <option value="" disabled selected>Select your country</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Tanzania">Tanzania</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Burundi">Burundi</option>
+                    <option value="Algeria">Algeria</option>
+                    <option value="Botswana">Botswana</option>
+                    <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                    <option value="Ghana">Ghana</option>
+                    <option value="Malawi">Malawi</option>
+                    <option value="Mali">Mali</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="Senegal">Senegal</option>
+                    <option value="South Africa">South Africa</option>
+                    <option value="Zambia">Zambia</option>
+                    <!-- Add more countries as needed -->
+                </select>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required class="form-control">
+                    <div class="input-group-append">
+                        <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                            <i class="fa fa-eye" style="color:#006400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Add User</button> 
+        </form>
+    </div>
+</div>
 </main>
 
 <script>
-  document.getElementById('addUserBtn').addEventListener('click', function() {
-    document.getElementById('addUserModal').classList.remove('hidden');
-  });
+  document.addEventListener("DOMContentLoaded", function() {
+    const addUserBtn = document.getElementById("addUserBtn");
+    const userModal = document.getElementById("userModal");
+    const closeModal = document.getElementById("closeModal");
+    const addUserForm = document.getElementById("addUserForm");
 
-  document.getElementById('closeModal').addEventListener('click', function() {
-    document.getElementById('addUserModal').classList.add('hidden');
-  });
+    // Show modal
+    addUserBtn.addEventListener("click", () => {
+      userModal.classList.remove("hidden");
+    });
 
-  document.getElementById('addUserForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // AJAX or fetch code here to send form data to the server
-    const formData = new FormData(this);
-    fetch('/admin/addUser', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('User added successfully');
-        location.reload(); // Reload the page to see the new user
-      } else {
-        alert('Error adding user: ' + data.message);
+    // Close modal
+    closeModal.addEventListener("click", () => {
+      userModal.classList.add("hidden");
+    });
+
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordField = document.getElementById('password');
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+      this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+    
+
+    // Handle form submission
+    addUserForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(addUserForm);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch("/admin/addUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          // Handle successful user addition
+          location.reload(); // Reload the page to show the updated user list
+        } else {
+          // Handle errors
+          console.error("Error adding user:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error adding user:", error);
       }
-    })
-    .catch(error => {
-      console.error('Error:', error);
     });
   });
-
-  function deleteUser(userId) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      fetch(`/admin/deleteUser/${userId}`, { method: 'DELETE' })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('User deleted successfully');
-          location.reload(); // Reload the page to see the updated user list
-        } else {
-          alert('Error deleting user: ' + data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    }
-  }
 </script>
-
-<%- include("../common/footer.ejs") %>

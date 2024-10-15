@@ -5,6 +5,35 @@
   body {
     background: #fff;
   }
+
+  /* Styling for the password input field and toggle button */
+  .password-wrapper {
+    position: relative;
+  }
+
+  #password {
+    padding-right: 2.5rem; /* Space for the eye icon */
+  }
+
+  #toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #006400;
+    font-size: 1.25rem;
+  }
+
+  #toggle-icon {
+    color: #006400;
+  }
+
+  .form-label {
+    color: #000;
+  }
 </style>
 <%- include("../common/navbar.ejs") %>
 <br><br>
@@ -12,25 +41,28 @@
   <div class="card p-4 border-0" style="box-shadow: 0 5px 10px rgba(0,0,0,0.9); margin: 5% 33.33%; align-items:center"> 
     <div class="card-body">
       <div class="mb-6">
-        <h2 class="card-title text-center" style="color: #006400;">Welcome back to <span style="color: #000;">MyWasteWatch</span></h2>
-        <p class="text-muted text-center" style="color: #000;">Log in</p> 
+        <p class="text-center text-2xl font-bold" style="color: #006400;">Log in here</p> 
       </div>
       <form action="/login_process" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="mb-4">
           <label for="email" class="form-label" style="color: #000;">Email</label> 
           <input type="email" id="email" name="email" placeholder="name@example.com" class="form-control border-success" style="border-color: #000;" required>
         </div>
-        <div class="mb-4" style="position: relative;">
+
+        <div class="mb-4 password-wrapper">
           <label for="password" class="form-label" style="color: #000;">Password</label> 
           <input type="password" id="password" name="password" placeholder="Enter password" class="form-control border-success" style="color: #000;" required> 
-          <button type="button" id="toggle-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #006400;">
-              <i id="toggle-icon" class="fa fa-eye" style="color: #006400;"></i>
+          <button type="button" id="toggle-password">
+              <i id="toggle-icon" class="fa fa-eye"></i>
           </button>
         </div>
-        <button type="submit" class="btn" style="background-color: #006400; color: #000; width: 100%;"><important>Login</important></button> 
+
+        <button type="submit" class="btn" style="background-color: #006400; color: #fff; width: 100%;"><important class="font-bold">Login</important></button> 
       </form>
+
       <div class="text-center mt-4">
-        <small style="color: #000;">Don’t have an account? <a href="/signup"><important>Sign up</important></a></small> 
+        <small style="color: #000;">Don’t have an account? <a href="/signup" class="font-bold" style="color: #006400; text-decoration: none;">Sign up</a></small> 
       </div>
     </div>
   </div>

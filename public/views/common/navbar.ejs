@@ -2,30 +2,32 @@
 <link href="/css/mega-menu.css" rel="stylesheet">
 <nav>
   <div class="wrapper">
-    <div class="logo"><a href="#" class="flex ms-2 md:me-24" style="text-decoration: none;">
-      <img src="/images/bin-2.png" class="h-12 w-11 me-3" alt="Logo" />
-      <span class="self-center text-xl font-extrabold sm:text-2xl capitalize text-white">MyWasteWatch</span>
-    </a></div>
+    <div class="logo">
+      <a href="/" class="flex ms-2 md:me-24" style="text-decoration: none;">
+        <img src="/images/bin-2.png" class="h-12 w-11 me-3" alt="Logo" />
+        <span class="self-center text-5xl font-extrabold sm:text-3xl capitalize text-white">MyWasteWatch</span>
+      </a>
+    </div>
     <input type="radio" name="slider" id="menu-btn">
     <input type="radio" name="slider" id="close-btn">
     <ul class="nav-links">
       <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
-      <li><a href="/">Home</a></li>
-      <li><a href="/about-us">About</a></li>
-      <li><a href="/services" class="desktop-item">Services</a><li>
-      <li><a href="#!" class="desktop-item">Users</a>
+      <li><a href="/" style="font-size: 1.5rem;">Home</a></li>
+      <li><a href="/about-us" style="font-size: 1.5rem;">About</a></li>
+      <li><a href="/services" class="desktop-item" style="font-size: 1.5rem;">Services</a></li>
+      <li>
+        <a href="#!" class="desktop-item" style="font-size: 1.5rem;">Users</a>
         <input type="checkbox" id="showDrop">
         <label for="showDrop" class="mobile-item"></label>
         <ul class="drop-menu">
-          <li><a href="/admin/login">Admin</a></li>
-          <li><a href="/driver/">Driver</a></li>
+          <li><a href="/admin/login" style="font-size: 1.2rem;">Admin Login</a></li>
+          <li><a href="/driver/" style="font-size: 1.2rem;">Driver Login</a></li>
+          <li><a href="/login" style="font-size: 1.2rem;">User Login</a></li>
         </ul>
       </li>
-      <li><a href="/contact-us">Contact Us</a></li>
-      <li><a href="/login">Login</a></li>
+      <li><a href="/contact-us" style="font-size: 1.5rem;">Contact Us</a></li>
     </ul>
 
     <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
   </div>
 </nav>
-

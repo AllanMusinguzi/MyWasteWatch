@@ -22,21 +22,15 @@ const Driver = mongoose.model('Driver', driverSchema);
 // Function to generate random data
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 const generateRandomPhoneNumber = () => `+256${getRandomInt(700000000)}`; // Assuming Ugandan phone numbers
-const vehicleTypes = ["Van", "Truck", "Motorcycle"];
-const defaultPassword = "defaultPassword123"; // Replace with a secure default password
+const vehicleTypes = ["Van", "Truck", "Motorcycle", "Car"];
+const defaultPassword = "ABCD123"; // Replace with a secure default password
 
-// Sample names
-const sampleNames = [
-    "John Habyarimaana",
-    "John Doe",
-    // Add other names...
-];
 
 // Function to create drivers
 const createDrivers = async () => {
     const drivers = [];
 
-    for (let i = 0; i < 50; i++) { // Generate 50 drivers
+    for (let i = 0; i < 100; i++) { // Generate 50 drivers
         const nameIndex = getRandomInt(sampleNames.length);
         const name = sampleNames[nameIndex];
 

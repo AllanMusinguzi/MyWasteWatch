@@ -2,185 +2,270 @@
 <%- include("../common/nav.ejs") %>
 
 <link rel="stylesheet" href="/css/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  .dashboard-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #006400;
+  }
+  .stat-label {
+    font-size: 14px;
+    font-family: 'Ubuntu', sans-serif;
+    color: #000;
+  }
+</style>
 
 <!--Toggle Button-->
-<button id="toggle-btn" class="btn btn-success d-md-none mt-3 ms-3" style="z-index: 1000;">Toggle Sidebar</button>
+<button id="toggle-btn" class="btn btn-primary d-md-none mt-3 ms-3" style="z-index: 1000;">
+  <i class="fas fa-bars"></i>
+</button>
 
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 pt-20 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
   <div class="h-full px-3 pb-4 overflow-y-auto">
     <ul class="space-y-2 font-medium">
       <li>
-        <a href="dashboard" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21"><path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" /><path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" /></svg><span class="ms-3 text-xl">Dashboard</span></a>
-      </li>
-      <li>
-        <a href="/admin/allRequests" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18"> <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" /></svg><span class=" ms-3 text-xl whitespace-nowrap">Requests</span></a>
-      </li>
-      <li>
-        <a href="/admin/createDriver" class="sidebar-link"> <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap"> Create Driver</span></a>
-      </li>
-      <li>
-        <a href="/admin/allDrivers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"> <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Drivers</span>
+        <a href="dashboard" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2L2 9h3v7h10V9h3L10 2z" />
+          </svg>
+          <span class="ms-3 text-xl">Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="/admin/allUsers" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20"> <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
-          </svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Users</span>
+        <a href="/admin/allRequests" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M1 3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3z" />
+          </svg>
+          <span class="ms-3 text-xl whitespace-nowrap">Requests</span>
         </a>
-      </li>      
+      </li>
       <li>
-        <a href="/admin/logout" class="sidebar-link"><svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" /></svg><span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span></a>
+        <a href="/admin/createDriver" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a8 8 0 0 0-8 8h2a6 6 0 1 1 12 0h2a8 8 0 0 0-8-8zM4 16h12v2H4v-2z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Create Driver</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/allDrivers" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a8 8 0 0 0-8 8h2a6 6 0 1 1 12 0h2a8 8 0 0 0-8-8zM4 16h12v2H4v-2z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Drivers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/allUsers" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-6 6a6 6 0 0 1 12 0H4z" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Users</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin/logout" class="sidebar-link">
+          <svg class="svg-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+          </svg>
+          <span class="flex-1 ms-3 text-xl whitespace-nowrap">Logout</span>
+        </a>
       </li>
     </ul>
   </div>
 </aside>
 
 <div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-300 border-b rounded-lg dark:border-gray-700 mt-14" style="font-size: 16px;">
-    <div class="max-w-7xl mx-auto">
-      <div class="bg-white rounded-3xl p-8 mb-5">
-        <h1 class="text-center font-bold my-10">My Dashboard</h1>
-  
-        <hr class="my-10">
-  
-        <div class="grid grid-cols-2 gap-x-20">
-          <div>
-            <h2 class="font-bold mb-4">Request Statistics</h2>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
-                <div class="p-4 bg-blue-100 rounded-xl">
-                  <div class="font-bold text-xl text-dark leading-none">Total Requests</div>
-                  <div class="mt-5">
-                    <p
-                      class="inline-flex items-center justify-center py-2 px-12 rounded-xl bg-white text-dark text-lg font-extrabold transition">
-                      <%= result.total_requests %>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl text-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_pending %>
-                </div>
-                <div class="mt-2">Pending Requests</div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl text-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_resolved %>
-                </div>
-                <div class="mt-2">Completed Request</div>
-              </div>
-              <div class="col-span-2">
-                <div class="p-4 bg-blue-100 rounded-xl text-dark">
-                  <div class="mt-2 text-2xl font-semibold">
-                    <%= result.total_unassigned_driver_requests %>
-                  </div>
-                  <div class="mt-2">Unassinged driver on requests</div>
-                </div>
-              </div>
-            </div>
-  
-  
-            <h2 class="font-bold mb-4 mt-8">Vehicle's Statistrics</h2>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 bg-blue-100 rounded-xl ttext-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_trucks %>
-                </div>
-                <div class="mt-2">Total Trucks</div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl ttext-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_cars %>
-                </div>
-                <div class="mt-2">Total Cars</div>
-              </div>
-              <div class="p-4 bg-yellow-100 rounded-xl ttext-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_van %>
-                </div>
-                <div class="mt-2 text-xl">Total Vans</div>
-              </div>
-              <div class="p-4 bg-blue-100 rounded-xl ttext-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_motorcycle %>
-                </div>
-                <div class="mt-2 text-xl">Total Motorcycles</div>
-              </div>
-            </div>
-  
-          </div>
-          <div>
-            <h2 class="font-semibold mb-3 mt-2">Request Types</h2>
-            <div class="space-y-4">
-              <div class="p-4 border rounded-xl text-dark space-y-2">
-                <div class="flex justify-between">
-                  <div class="mt-2 text-2xl font-semibold">
-                    <%= result.total_pickup_request %>
-                  </div>
-                </div>
-                <div class="mt-2">Pickup requests</div>
-              </div>
-              <div class="p-4 border rounded-xl text-dark space-y-2">
-                <div class="flex justify-between">
-                  <div class="mt-2 text-2xl font-semibold">
-                    <%= result.total_complaint_request %>
-                  </div>
-                </div>
-                <div class="mt-2">Complaint request</div>
-              </div>
-              <div class="p-4 border rounded-xl text-gray-800 space-y-2">
-                <div class="flex justify-between">
-                  <div class="mt-2 text-2xl font-semibold">
-                    <%= result.total_recycling_request %>
-                  </div>
-                </div>
-                <div class="mt-2">Recycling requests</div>
-              </div>
-              <div class="p-4 border rounded-xl text-dark space-y-2">
-                <div class="flex justify-between">
-                  <div class="mt-2 text-2xl font-semibold">
-                    <%= result.total_other_request %>
-                  </div>
-                </div>
-                <div class="mt-2">Others requests</div>
-              </div>
-            </div>
-  
-            <h2 class="text-2xl font-semibold mb-4 mt-8">More Statistics</h2>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 bg-blue-100 rounded-xl text-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_drivers %>
-                </div>
-                <div class="mt-2">Total Drivers</div>
-              </div>
-              <div class="p-4 bg-blue-100 rounded-xl text-dark">
-                <div class="mt-2 text-2xl font-semibold">
-                  <%= result.total_users %>
-                </div>
-                <div class="leading-none" style="font-size: large;">Total Users</div>
-              </div>
-            </div>
-          </div>
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <h1 class="text-3xl font-bold mb-6" style="text-align: center;">Admin Dashboard</h1>
+    
+    <!-- Overview Statistics -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Overview</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_requests %></div>
+          <div class="stat-label">Total Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_drivers %></div>
+          <div class="stat-label">Total Drivers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_users %></div>
+          <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= result.total_trucks + result.total_cars + result.total_van + result.total_motorcycle %></div>
+          <div class="stat-label">Total Vehicles</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Request Statistics -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Request Statistics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <canvas id="requestStatusChart"></canvas>
+        </div>
+        <div>
+          <canvas id="requestTypesChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Vehicle Statistics -->
+    <div class="dashboard-card">
+      <h2 class="text-xl font-semibold mb-4">Vehicle Statistics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <canvas id="vehicleTypesChart"></canvas>
+        </div>
+        <div>
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th class="py-2 px-4 border-b">Vehicle Type</th>
+                <th class="py-2 px-4 border-b">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="py-2 px-4 border-b">Trucks</td>
+                <td class="py-2 px-4 border-b"><%= result.total_trucks %></td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 border-b">Cars</td>
+                <td class="py-2 px-4 border-b"><%= result.total_cars %></td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 border-b">Vans</td>
+                <td class="py-2 px-4 border-b"><%= result.total_van %></td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 border-b">Motorcycles</td>
+                <td class="py-2 px-4 border-b"><%= result.total_motorcycle %></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- JavaScript to toggle sidebar on small screens -->
 <script>
+  // Toggle sidebar functionality
   const toggleBtn = document.getElementById('toggle-btn');
   const sidebar = document.getElementById('logo-sidebar');
 
   toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('show');
+    sidebar.classList.toggle('-translate-x-full');
+  });
+
+  // Chart.js configurations
+  const requestStatusData = {
+    labels: ['Pending', 'Completed', 'Unassigned'],
+    datasets: [{
+      data: [<%= result.total_pending %>, <%= result.total_resolved %>, <%= result.total_unassigned_driver_requests %>],
+      backgroundColor: ['#ffc107', '#28a745', '#17a2b8']
+    }]
+  };
+
+  const requestTypesData = {
+    labels: ['Pickup', 'Complaint', 'Recycling', 'Others'],
+    datasets: [{
+      data: [<%= result.total_pickup_request %>, <%= result.total_complaint_request %>, <%= result.total_recycling_request %>, <%= result.total_other_request %>],
+      backgroundColor: ['#007bff', '#dc3545', '#20c997', '#6c757d']
+    }]
+  };
+
+  const vehicleTypesData = {
+    labels: ['Trucks', 'Cars', 'Vans', 'Motorcycles'],
+    datasets: [{
+      data: [<%= result.total_trucks %>, <%= result.total_cars %>, <%= result.total_van %>, <%= result.total_motorcycle %>],
+      backgroundColor: ['#fd7e14', '#6f42c1', '#e83e8c', '#1e90ff']
+    }]
+  };
+
+  // Create charts
+  new Chart(document.getElementById('requestStatusChart'), {
+    type: 'pie',
+    data: requestStatusData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Request Status'
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('requestTypesChart'), {
+    type: 'doughnut',
+    data: requestTypesData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Request Types'
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('vehicleTypesChart'), {
+    type: 'bar',
+    data: {
+      labels: vehicleTypesData.labels,
+      datasets: [{
+        label: 'Number of Vehicles',
+        data: vehicleTypesData.datasets[0].data,
+        backgroundColor: vehicleTypesData.datasets[0].backgroundColor
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: 'Vehicle Types Distribution'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
   });
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
