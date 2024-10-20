@@ -90,25 +90,33 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserDashboard = async (req, res) => {
   let token = req.cookies["accesstoken"];
+  
+  if (!token) {
+    // Handle case where token is not available (e.g., redirect to login)
+    return res.redirect('/login');
+  }
+
   let email = jwt.decode(token, process.env.jwt_secret).email;
   let db = _db.getDb();
 
-  let result = await db
-    .collection("requests")
-    .find(
-      {
-        email,
+  // Retrieve user data from the database
+  const user = await db.collection("users").findOne(
+    { email },
+    { projection: { profile_image: true, username: true, email: true, name: true, number: true, address: true } }
+  );
+
+  // Retrieve requests data
+  let result = await db.collection("requests").find(
+    { email },
+    {
+      projection: {
+        _id: false,
+        request_type: true,
+        status: true,
+        assignedDriver: true,
       },
-      {
-        projection: {
-          _id: false,
-          request_type: true,
-          status: true,
-          assignedDriver: true,
-        },
-      }
-    )
-    .toArray();
+    }
+  ).toArray();
 
   let total_requests = result.length;
   let total_pending = result.filter((item) => item.status === "pending").length;
@@ -130,9 +138,9 @@ exports.getUserDashboard = async (req, res) => {
       total_other_request,
       total_unassigned_driver_requests,
     },
+    user: user || null, // Pass user data to the view, or null if not found
   });
 };
-
 
 
 exports.logoutUser = (req, res) => {
@@ -142,17 +150,33 @@ exports.logoutUser = (req, res) => {
 
 
 
+// Get the Raise Request Page
 exports.getRaiseRequestPage = (req, res) => {
-  res.render("user/request.ejs");
+  let token = req.cookies["accesstoken"];
+  let user;
+
+  try {
+    user = jwt.decode(token, process.env.jwt_secret);
+  } catch (err) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  res.render("user/request.ejs", { user });
 };
 
-
-
+// Submit a new request
 exports.submitRequest = (req, res) => {
   let token = req.cookies["accesstoken"];
-  let email = jwt.decode(token, process.env.jwt_secret).email;
+  let user;
+
+  try {
+    user = jwt.decode(token, process.env.jwt_secret);
+  } catch (err) {
+    return res.status(401).send("Unauthorized");
+  }
+
   let data_to_insert_in_db = req.body;
-  data_to_insert_in_db.email = email;
+  data_to_insert_in_db.email = user.email;
   data_to_insert_in_db.status = "pending";
   data_to_insert_in_db.time = new Date().toLocaleString();
   data_to_insert_in_db.assignedDriver = "none";
@@ -168,15 +192,22 @@ exports.submitRequest = (req, res) => {
     });
 };
 
-
-
+// Get My Requests Page
 exports.getMyRequests = async (req, res) => {
-  let email = jwt.decode(req.cookies["accesstoken"], process.env.jwt_secret).email;
+  let token = req.cookies["accesstoken"];
+  let user;
+
+  try {
+    user = jwt.decode(token, process.env.jwt_secret);
+  } catch (err) {
+    return res.status(401).send("Unauthorized");
+  }
+
   let db = _db.getDb();
 
   try {
-    let result = await db.collection("requests").find({ email }).toArray();
-    res.render("user/my-requests.ejs", { requests: result.reverse() });
+    let result = await db.collection("requests").find({ email: user.email }).toArray();
+    res.render("user/my-requests.ejs", { requests: result.reverse(), user });
   } catch (err) {
     res.send("There is some error.");
   }

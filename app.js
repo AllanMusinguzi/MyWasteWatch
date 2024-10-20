@@ -9,6 +9,7 @@ const indexRoutes = require("./routes/index");
 const csrf = require('csurf');
 const methodOverride = require('method-override');
 const adminController = require('./controllers/adminController');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.get('/admin/list', adminController.listAdmins);
 
 // Routes
 app.use("/", indexRoutes);
+app.use("/", uploadRoutes);
 
 // Services, About Us, and Contact Us pages
 app.get('/services', (req, res) => {

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="/public/css/styles.css" rel="stylesheet">
+    <style>
+        /* Fix the navbar at the top and span the whole width */
+        .navbar.nav-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px; /* Increase the height */
+            background-color: #006400;
+            z-index: 9999; /* Ensure it stays on top of other elements */
+            padding: 10px 10px; /* Adjust padding */
+            box-sizing: border-box;
+            font-family: 'Ubuntu', sans-serif;
+            border: none;
+            margin: 0;
+        }
+
+        /* Navbar brand and logo alignment */
+        .navbar-brand {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .navbar-brand img {
+            max-height: 40px; /* Adjust logo height */
+            margin-right: 5px;
+            margin-left: 20px;
+        }
+
+        .navbar-brand .label {
+            color: #fff;
+            font-size: 24px; /* Increase text size */
+            font-weight: bold;
+        }
+
+        /* Navbar links with larger padding for height increase */
+        .navbar-default .navbar-nav > li > a {
+            color: #fff;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 20px 10px; /* Increased padding for larger height */
+            line-height: 30px; /* Adjust for vertical centering */
+        }
+
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            background-color: transparent;
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* User dropdown menu styling */
+        .navbar-right .dropdown-toggle {
+            padding: auto; 
+        }
+
+        .navbar-right .glyphicon-user {
+            margin-right: 10px;
+        }
+
+        .navbar-right .dropdown-toggle strong {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        /* Adjust dropdown appearance */
+        .dropdown-menu {
+            background-color: #fff;
+            border: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 275px; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+        }
+
+        .navbar-right .dropdown-toggle .profile-image-container img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%; 
+            margin-bottom: 5px;
+            object-fit: cover; 
+            position: relative;
+        }
+
+        /* Adjust the alignment to center the image in the navigation bar */
+        .navbar-right .dropdown-toggle {
+            padding: 5px; 
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 50%; /* Make the image circular */
+        }
+
+        .image-upload-container {
+            position: relative; /* To position the upload button */
+            width: 100%; /* Full width of container */
+            height: 100%; /* Full height of container */
+        }
+
+        .upload-button {
+            position: absolute; /* Position the button over the image */
+            bottom: 10px; /* Positioning */
+            left: 50%; /* Centering */
+            transform: translateX(-50%); /* Center the button */
+            display: none; /* Hide button by default */
+        }
+
+        /* Show the upload button when hovering over the image */
+        .image-upload-container:hover .upload-button {
+            display: contents;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            .navbar-brand img {
+                max-height: 35px;
+            }
+
+            .nav > li > a {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">    
+        <nav class="navbar navbar-default nav-menu">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">
+                    <img src="/images/bin-2.png" alt="Logo" />
+                    <span class="label">MyWasteWatch</span>
+                </a>
+            </div>
+            
+            <div class="collapse navbar-collapse button-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <div class="profile-image-container">
+                                <img 
+                                    id="dropdown-profile-image" 
+                                    class="profile-image" 
+                                    src="<%= (user && user.profile_image) ? user.profile_image : '/images/default-profile.png' %>" 
+                                    alt="Profile Image"
+                                >
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <div class="navbar-login">
+                                  <div class="row">
+                                    <div class="col-lg-4">
+                                      <div class="image-upload-container">
+                                        <div class="profile-image-container">
+                                          <img
+                                            id="profile-image"
+                                            class="img-fluid profile-image"
+                                            src="<%= user && user.profile_image ? user.profile_image : '/images/default-profile.png' %>"
+                                            alt="<%= user ? user.username + '\'s profile' : 'Default profile' %>"
+                                            style="display: <%= user && user.profile_image ? 'block' : 'none' %>;"
+                                          >
+                                        </div>
+                                        <input 
+                                          type="file" 
+                                          id="image-upload" 
+                                          accept="image/*" 
+                                          style="display: none;" 
+                                          onchange="loadProfileImage(event)"
+                                        >
+                                        <button 
+                                          class="btn btn-primary btn-sm btn-block mt-2 upload-button" 
+                                          onclick="document.getElementById('image-upload').click();"
+                                        >
+                                          Upload
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                      <p class="text-left"><strong>Name: <%= user ? user.name : 'Guest' %></strong></p>
+                                      <p class="text-left">Contact: <%= user ? user.number : '+(000)-000-000-000'%></p>
+                                      <p class="text-left">Email: <%= user ? user.email : 'No emaill' %></p>
+                                      <p class="text-left">Address: <%= user ? user.address : 'Address' %></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                <a href="/change-password" class="btn btn-danger btn-sm btn-block">Change Password</a>
+                                                <a href="/logout" class="btn btn-primary btn-block btn-sm">Logout</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>                
+            </div>
+        </nav>
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Allow dropdown to stay open on click
+            $('.dropdown-toggle').click(function (e) {
+                e.stopPropagation(); // Prevent dropdown from closing
+                $(this).parent().toggleClass('open'); // Toggle the dropdown open/close
+            });
+
+            // Close dropdown when clicking outside
+            $(document).click(function () {
+                $('.dropdown').removeClass('open'); // Close the dropdown when clicking outside
+            });
+        });
+
+        function loadProfileImage(event) {
+            const newImage = URL.createObjectURL(event.target.files[0]);
+            document.getElementById('profile-image').src = newImage; // Update the dropdown image
+            document.getElementById('dropdown-profile-image').src = newImage; // Update the main profile image
+            document.getElementById('default-icon').style.display = 'none'; // Hide the default icon
+            document.getElementById('default-icon-upload').style.display = 'none'; // Hide the default icon in the upload section
+        }
+    </script>
+</body>
+</html>
