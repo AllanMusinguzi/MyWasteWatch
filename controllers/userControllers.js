@@ -7,7 +7,6 @@ exports.getHomepage = (req, res) => {
   let token = req.cookies["accesstoken"];
   jwt.verify(token, process.env.jwt_secret, (err, user) => {
     if (err) {
-      // Render the landing page if not logged in
       res.render("homepage.ejs");
     } else {
       res.redirect("/home");
@@ -52,33 +51,42 @@ exports.signupUser = async (req, res) => {
   }
 };
 
-
-
 exports.loginUser = async (req, res) => {
-  let body = req.body;
-  let { email, password } = body;
-  let db = _db.getDb();
+  const { email, password } = req.body;
+  const db = _db.getDb();
 
-  let data_in_db = await db.collection("users").findOne({ email });
+  try {
+    const data_in_db = await db.collection("users").findOne({ email });
 
-  if (!data_in_db) {
-    res.send("Email or password is wrong");
-  } else {
-    let password_in_db = data_in_db.password;
-    let is_password_right = bcrypt.comparePassword(password, password_in_db);
-
-    if (!is_password_right) {
-      res.send("Email or password is wrong");
-    } else {
-      let access_token = jwt.sign({ email }, process.env.jwt_secret, { expiresIn: "5h" });
-      res.cookie("accesstoken", access_token);
-      console.log("User logged in");
-      res.redirect("/home");
+    if (!data_in_db) {
+      return res.status(401).json({ message: "Email or password is wrong" });
     }
+
+    const isPasswordRight = await bcrypt.comparePassword(password, data_in_db.password);
+
+    if (!isPasswordRight) {
+      return res.status(401).json({ message: "Email or password is wrong" });
+    }
+
+    const access_token = jwt.sign(
+      { email: data_in_db.email, id: data_in_db._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "5h" }
+    );
+
+    res.cookie("accesstoken", access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 18000000 // 5 hours in milliseconds
+    });
+
+    console.log("User logged in");
+    return res.redirect("/home");
+  } catch (error) {
+    console.error('Error during login:', error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
 
 exports.getUserDashboard = async (req, res) => {
   let token = req.cookies["accesstoken"];

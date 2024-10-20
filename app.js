@@ -8,6 +8,7 @@ const _db = require("./config/db");
 const indexRoutes = require("./routes/index");
 const csrf = require('csurf');
 const methodOverride = require('method-override');
+const adminController = require('./controllers/adminController');
 
 const app = express();
 
@@ -39,6 +40,10 @@ app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
 });
+
+app.post('/admin/login', adminController.loginAdmin);
+app.post('/admin/add', adminController.addAdmin);
+app.get('/admin/list', adminController.listAdmins);
 
 // Routes
 app.use("/", indexRoutes);

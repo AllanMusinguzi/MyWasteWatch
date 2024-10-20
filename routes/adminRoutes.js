@@ -12,7 +12,6 @@ router.use(session({
     saveUninitialized: false
 }));
 
-
 router.get("/", adminController.redirectToLogin);
 router.get("/login", adminController.getLoginPage);
 router.post("/login_process", adminController.loginAdmin);
