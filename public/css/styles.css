@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --primary-color: #006400;
 }
@@ -22,6 +18,37 @@ body {
   color: #000;
 }
 
+
+
+#sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: #4B0082; 
+  color: #000; 
+  position: fixed;
+  top: 70px;
+  left: 0;
+}
+
+#sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#sidebar ul li {
+  padding: 10px;
+  border-bottom: 1px solid #4B0082; 
+}
+
+#sidebar ul li a {
+  color: #000; 
+  text-decoration: none;
+}
+
+#content {
+  margin-left: 250px;
+  padding: 20px;
+}
 
 #processing {
   display: none;
@@ -56,87 +83,113 @@ body {
 }
 
 
-
-/* Sidebar Design */
-.logo-sidebar {
+/*** Admin Dashboard **/
+#logo-sidebar {
   background-color: #006400;
   text-decoration: none;
   color: white;
   position: fixed;
-  width: 250px;
   height: 100vh;
   overflow-y: auto;
-  font-size: 18px;
-  padding-top: 85px;
+  top:auto;
+  left: 0;
 }
-
-/* Sidebar Links */
-.logo-sidebar a {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  color: white;
+#logo-sidebar a {
   text-decoration: none;
-  transition: background-color 0.3s ease;
-  font-size: 16px;
+  padding: 20px;
+  background-color: #006400;
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  transition: all 0.3s ease;
 }
 
-/* Icon Style */
-.logo-sidebar a i {
-  margin-right: 15px;
-  font-size: 20px;
-}
-
-/* Hover Effect for Links */
-.logo-sidebar a:hover {
+#logo-sidebar a:hover {
   background-color: #004c00;
-  border-radius: 5px;
 }
 
-/* Custom Scrollbar Styling */
-.logo-sidebar::-webkit-scrollbar {
+#logo-sidebar::-webkit-scrollbar {
   width: 8px;
 }
-
-.logo-sidebar::-webkit-scrollbar-thumb {
+#logo-sidebar::-webkit-scrollbar-thumb {
   background-color: #004c00;
 }
-
-.logo-sidebar::-webkit-scrollbar-track {
+#logo-sidebar::-webkit-scrollbar-track {
   background: #003300;
 }
-
-/* Main Content Styling */
 main {
   margin-left: 250px;
+  border-bottom: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.grid a {
+  text-decoration: none;
   padding: 20px;
+  background-color: #006400;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+.grid a:hover {
+  background-color: #004c00;
+}
+.grid p {
+  font-size: 2rem;
 }
 
-@media (max-width: 768px) {
-  .logo-sidebar {
-    transform: translateX(-250px);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .logo-sidebar.show {
-    transform: translateX(0);
-  }
-
-  #toggle-btn {
-    display: block;
-    background-color: #006400;
-  }
+.main {
+height: auto;
 }
 
-@media (min-width: 768px) {
-  #toggle-btn {
-    display: none;
-  }
-
-  main {
-    margin-left: 250px;
-  }
+@media (max-width: 768px){
+#logo-sidebar {
+  transform: translateX(-250px);
+  transition: transform 0.3s ease-in-out;
 }
+#logo_sidebar.show{
+  transform: translateX(0);
+}
+#toggle-btn {
+  display: block;
+  background-color: #006400;
+}
+}
+
+@media (min-width: 768px){
+#toggle-btn {
+  display: none;
+}
+main {
+  margin-left: 250px;
+}
+}
+
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+  color: #000;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+}
+
+.svg-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fff;
+  transition: all 0.2s ease;
+  transition-duration: 75ms;
+}
+
 /** 404 Page**/
 
 .body {
@@ -258,7 +311,7 @@ main {
 }
 
 /* Example sidebar styles */
-.logo-sidebar-btn {
+#logo-sidebar-btn {
   width: 250px;
   height: 100vh;
   background-color: #006400;

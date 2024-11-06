@@ -18,41 +18,26 @@ exports.getDriverLogin = async (req, res) => {
 };
 
 exports.loginDriver = async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+  let db = _db.getDb();
+  let result = await db.collection("drivers").findOne({ email });
 
-  try {
-    const db = _db.getDb();
-    const result = await db.collection("drivers").findOne({ email });
-
-    if (!result) {
-      return res.status(401).json({ message: "Wrong email or password" });
-    }
-
-    const isPasswordOk = await bcrypt.comparePassword(password, result.password); 
+  if (!result) {
+    res.send("Wrong email or password");
+  } else {
+    let password_in_db = result.password;
+    let isPasswordOk = bcrypt.comparePassword(password, password_in_db);
 
     if (isPasswordOk) {
- 
-      const access_token = jwt.sign(
-        { id: result._id, role: "driver" },
-        process.env.JWT_SECRET, 
-        { expiresIn: '1h' } 
-      );
-
-      res.cookie("accesstoken", access_token, {
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        maxAge: 3600000 // 1 hour in milliseconds
-      });
-
-      return res.redirect("/driver/dashboard");
+      let access_token = jwt.sign({ id: result._id, role: "driver" }, process.env.jwt_secret);
+      res.cookie("accesstoken", access_token);
+      res.redirect("/driver/dashboard");
     } else {
-      return res.status(401).json({ message: "Wrong email or password" });
+      res.send("Wrong email or password");
     }
-  } catch (error) {
-    console.error('Error during login:', error);
-    return res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 exports.getDriverDashboard = async (req, res) => {
   try {

@@ -2,7 +2,6 @@
 const bcrypt = require("bcrypt");
 const _db = require("../config/db");
 const { ObjectId } = require("mongodb");
-const dbConnection = require('../config/db');
 
 exports.redirectToLogin = (req, res) => {
     res.redirect("/admin/login");
@@ -16,7 +15,7 @@ exports.getLoginPage = (req, res) => {
     }
 };
 
-/*exports.loginAdmin = (req, res) => {
+exports.loginAdmin = (req, res) => {
     let { email, password } = req.body;
     let mail = "admin@mywastewatch.com";
     let hashed_pass = "$2b$12$oL5g1RTfp9pwCwLxQhXuLOABofHVV20HzfhJrPIHjtaXkfjfKZsri"; // Admin@4040
@@ -27,83 +26,6 @@ exports.getLoginPage = (req, res) => {
     } else {
         res.send("Email or Password is wrong");
     }
-};*/
-
-exports.loginAdmin = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-      const db = dbConnection.getDb();
-      const adminsCollection = db.collection('admins');
-
-      // Find the admin by email
-      const admin = await adminsCollection.findOne({ email });
-
-      if (!admin) {
-          console.log('Login failed: No admin found with email:', email);
-          return res.status(401).send("Email or Password is incorrect.");
-      }
-
-      // Compare the provided password with the stored hashed password
-      const isPasswordValid = await bcrypt.compare(password, admin.password);
-
-      if (isPasswordValid) {
-          console.log('Login successful for:', email);
-          req.session.isAdmin = true;
-          req.session.adminId = admin._id.toString(); // Store admin ID in session
-          return res.redirect("/admin/dashboard");
-      } else {
-          console.log('Login failed: Incorrect password for:', email);
-          return res.status(401).send("Email or Password is incorrect.");
-      }
-  } catch (err) {
-      console.error('Login Error:', err);
-      return res.status(500).send("An error occurred while processing your request.");
-  }
-};
-
-exports.addAdmin = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-      const db = dbConnection.getDb();
-      const adminsCollection = db.collection('admins');
-
-      // Check if admin already exists
-      const existingAdmin = await adminsCollection.findOne({ email });
-      if (existingAdmin) {
-          return res.status(400).send("An admin with this email already exists.");
-      }
-
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 12);
-
-      // Insert new admin
-      const result = await adminsCollection.insertOne({
-          email,
-          password: hashedPassword,
-          createdAt: new Date()
-      });
-
-      console.log('New admin added:', email);
-      res.status(201).send("New admin added successfully.");
-  } catch (err) {
-      console.error('Error adding new admin:', err);
-      res.status(500).send("An error occurred while adding new admin.");
-  }
-};
-
-exports.listAdmins = async (req, res) => {
-  try {
-      const db = dbConnection.getDb();
-      const adminsCollection = db.collection('admins');
-
-      const admins = await adminsCollection.find({}, { projection: { password: 0 } }).toArray();
-      res.json(admins);
-  } catch (err) {
-      console.error('Error listing admins:', err);
-      res.status(500).send("An error occurred while listing admins.");
-  }
 };
 
 exports.getAdminDashboard = async (req, res) => {
@@ -186,109 +108,123 @@ exports.getAdminDashboard = async (req, res) => {
 };
 
 exports.getAllRequests = async (req, res) => {
-    const db = _db.getDb();
+    let db = _db.getDb();
+
     try {
-      const [allDrivers, result] = await Promise.all([
-        db.collection("drivers").find({}).project({ name: 1 }).toArray(),
-        db.collection("requests").find({}).toArray()
-      ]);
-      res.render("admin/allRequests.ejs", { requests: result.reverse(), drivers: allDrivers });
-    } catch (error) {
-      handleError(res, error, "An error occurred while fetching requests.");
+        let allDrivers = await db.collection("drivers").find({}).project({ name: 1 }).toArray();
+
+        let result = await db.collection("requests").find({}).toArray();
+        res.render("admin/allRequests.ejs", { requests: result.reverse(), drivers: allDrivers });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("An error occurred while fetching requests.");
     }
-  };
-  
-  exports.assignDriver = async (req, res) => {
-    const { driverId, requestId } = req.query;
-    const db = _db.getDb();
+};
+
+exports.assignDriver = async (req, res) => {
+    let { driverId, requestId } = req.query;
+    let db = _db.getDb();
+
     try {
-      const driver = await db.collection("drivers").findOne(
-        { _id: new ObjectId(driverId) },
-        { projection: { name: 1 } }
-      );
-  
-      if (!driver) {
-        return res.status(404).json({ success: false, message: "Driver not found." });
-      }
-  
-      const result = await db.collection("requests").findOneAndUpdate(
-        { _id: new ObjectId(requestId) },
-        {
-          $set: {
-            assignedDriver: driver.name,
-            assignedDriverId: driverId,
-          },
-        },
-        { returnDocument: "after" }
-      );
-  
-      if (result.value) {
-        res.json({
-          success: true,
-          message: "The driver has been assigned",
-          driverName: result.value.assignedDriver,
-        });
-      } else {
-        res.status(404).json({ success: false, message: "Request not found or failed to assign driver." });
-      }
-    } catch (error) {
-      handleError(res, error, "An error occurred while assigning the driver.");
+        let driverName = await db.collection("drivers")
+            .find({ _id: new ObjectId(driverId) })
+            .project({ _id: 0, name: 1 })
+            .toArray();
+        
+        if (!driverName.length) {
+            return res.status(404).json({ isOK: false, msg: "Driver not found." });
+        }
+
+        driverName = driverName[0].name;
+
+        let data = await db.collection("requests").findOneAndUpdate(
+            { _id: new ObjectId(requestId) },
+            {
+                $set: {
+                    assignedDriver: driverName,
+                    assignedDriverId: driverId,
+                },
+            },
+            { returnDocument: "after" }
+        );
+
+        if (data.value) {
+            res.json({
+                isOK: true,
+                msg: "The driver has been assigned",
+                driverName: data.value.assignedDriver,
+            });
+        } else {
+            res.status(500).json({ isOK: false, msg: "Failed to assign driver." });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ isOK: false, msg: "An error occurred while assigning the driver." });
     }
-  };
-  
-  exports.unassignDriver = async (req, res) => {
-    const { requestId } = req.query;
-    const db = _db.getDb();
+};
+
+exports.unassignDriver = async (req, res) => {
+    let requestId = req.query.requestId;
+    let db = _db.getDb();
+
     try {
-      const result = await db.collection("requests").findOneAndUpdate(
-        { _id: new ObjectId(requestId) },
-        {
-          $unset: {
-            assignedDriver: "",
-            assignedDriverId: "",
-          },
-        },
-        { returnDocument: "after" }
-      );
-  
-      if (result.value && !result.value.assignedDriver && !result.value.assignedDriverId) {
-        res.json({
-          success: true,
-          message: "The driver has been unassigned successfully.",
-        });
-      } else {
-        res.status(404).json({ success: false, message: "Request not found or failed to unassign driver." });
-      }
-    } catch (error) {
-      handleError(res, error, "An error occurred while unassigning the driver.");
+        let result = await db.collection("requests").findOneAndUpdate(
+            { _id: new ObjectId(requestId) },
+            {
+                $set: {
+                    assignedDriver: "",
+                    assignedDriverId: "",
+                },
+            },
+            { returnDocument: "after" }
+        );
+
+        if (result.value && result.value.assignedDriver === "" && result.value.assignedDriverId === "") {
+            res.json({
+                isUnassigned: true,
+                msg: "The driver has been unassigned successfully.",
+            });
+        } else {
+            res.status(500).json({ isUnassigned: false, msg: "Failed to unassign driver." });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ isUnassigned: false, msg: "An error occurred while unassigning the driver." });
     }
-  };
-  
-  exports.rejectRequest = async (req, res) => {
-    const { requestId } = req.query;
-    const db = _db.getDb();
+};
+
+exports.rejectRequest = async (req, res) => {
+    let requestId = req.query.requestId;
+    let db = _db.getDb();
+
     try {
-      const result = await db.collection("requests").findOneAndUpdate(
-        { _id: new ObjectId(requestId) },
-        {
-          $set: { status: "rejected" },
-          $unset: { assignedDriver: "", assignedDriverId: "" },
-        },
-        { returnDocument: "after" }
-      );
-  
-      if (result.value && result.value.status === "rejected") {
-        res.json({
-          success: true,
-          message: "The request has been rejected successfully",
-        });
-      } else {
-        res.status(404).json({ success: false, message: "Request not found or failed to reject request." });
-      }
-    } catch (error) {
-      handleError(res, error, "An error occurred while rejecting the request.");
+        let result = await db.collection("requests").findOneAndUpdate(
+            { _id: new ObjectId(requestId) },
+            {
+                $set: {
+                    status: "rejected",
+                    assignedDriver: "",
+                    assignedDriverId: "",
+                },
+            },
+            { returnDocument: "after" }
+        );
+
+        if (result.value && result.value.status === "rejected") {
+            res.json({
+                isRejected: true,
+                msg: "The request has been rejected successfully",
+            });
+        } else {
+            res.status(500).json({ isRejected: false, msg: "Failed to reject request." });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ isRejected: false, msg: "An error occurred while rejecting the request." });
     }
-  };
+};
+
+
 exports.getCreateDriverPage = (req, res) => {
     res.render("admin/createDriver.ejs");
 };

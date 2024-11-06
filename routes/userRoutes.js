@@ -23,5 +23,4 @@ router.get("/raise-a-request", authMiddleware, csrfProtection, userController.ge
 router.post("/submit_request", authMiddleware, csrfProtection, userController.submitRequest);
 router.get("/my-requests", authMiddleware, csrfProtection, userController.getMyRequests);
 
-
 module.exports = router;
