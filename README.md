@@ -65,22 +65,5 @@ To start and run the MyWasteWatch application, follow these steps:
 3. **Access the Application**:
    - Once the services are running, the application will be accessible at `http://localhost:3000`.
 
-## Troubleshooting
-Common issues and solutions when working with the MyWasteWatch application:
-
-### MongoDB Connection Error
-- **Error**: `TypeError: Cannot read properties of undefined (reading 'startsWith')`
-- **Cause**: This error typically occurs when the `MONGO_URI` environment variable is not set correctly or the MongoDB connection string format is incorrect.
-- **Solution**: Verify that the `MONGO_URI` is correctly specified in the `.env` file and follows the MongoDB connection string format. Ensure the MongoDB service is running and accessible.
-
-### View Not Found Error
-- **Error**: `Error: Failed to lookup view "admin/adminlogin.ejs" in views directory "/app/public/views"`
-- **Cause**: The specified view template is not found in the expected directory.
-- **Solution**: Ensure that the `adminlogin.ejs` file exists in the `public/views/admin/` directory and the path specified in the code matches the file location.
-
-### Database Collection Error
-- **Error**: `TypeError: Cannot read properties of undefined (reading 'collection')`
-- **Cause**: This error occurs when attempting to access a MongoDB collection before the database connection is established.
-- **Solution**: Ensure that the database connection logic is correctly implemented and the application waits for the connection to be established before accessing collections.
 
 By following this documentation, you should be able to set up, run, and troubleshoot the MyWasteWatch application effectively. If you encounter any additional issues or have further questions, refer to the project's source code and configuration files for more details.
