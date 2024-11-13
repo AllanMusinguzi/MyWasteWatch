@@ -1,86 +1,218 @@
-# mywastewatch-mongodb-dockerized Documentation
+# MyWasteWatch - Waste Management Information System
 
-## Overview
-MyWasteWatch is an application designed to monitor and manage waste effectively. This documentation provides an extensive overview of the system architecture, setup instructions, and troubleshooting tips.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Node.js Version](https://img.shields.io/badge/node-v22.0_LTS-green)
+![MongoDB Version](https://img.shields.io/badge/mongodb-v4.4-green)
 
-## System Architecture
-The system is composed of two main services, orchestrated using Docker and Docker Compose:
+MyWasteWatch is a comprehensive web-based waste management system designed to streamline waste collection operations, optimize routes, and provide real-time analytics for better decision-making.
 
-1. **MongoDB Service**: 
-   - **Purpose**: Acts as the primary database for storing application data.
-   - **Image**: Utilizes the official `mongo:latest` Docker image.
-   - **Ports**: Exposes port `27017` for database access.
-   - **Volumes**: Uses a Docker volume for persistent data storage.
+## 🚀 Features
 
-2. **Node.js Application Service**:
-   - **Purpose**: The core application service, built with Node.js and the Express.js framework.
-   - **Build Context**: Includes the application source code and dependencies.
-   - **Ports**: Exposes port `3000` for accessing the web application.
-   - **Environment Variables**: Requires a `MONGO_URI` environment variable for database connection.
-   - **Dependencies**: Depends on the MongoDB service for database operations.
+- User authentication and role-based access control
+- Real-time waste collection scheduling
+- Route optimization for waste collectors
+- Interactive analytics dashboard
+- Mobile-responsive design
+- RESTful API architecture
 
-### Docker Compose
-The `docker-compose.yml` file defines the services, volumes, and dependencies. The MongoDB service is configured to start first, followed by the Node.js application service, which depends on MongoDB being ready.
+## 📋 Prerequisites
 
-### Dockerfile
-The `Dockerfile` specifies the build instructions for the Node.js application, including setting the working directory, copying necessary files, installing dependencies, and defining the startup command.
+Before you begin, ensure you have the following installed:
+- Docker & Docker Compose
+- Git
+- Node.js 22.0 LTS (for local development)
+- MongoDB 4.4 (for local development)
 
-## Project Structure
-The project is organized into several directories and files to maintain a clean and manageable codebase:
+## 🛠 Installation
 
-- **`app.js`**: The main entry point of the application, responsible for initializing the Express.js server and connecting to MongoDB.
-- **`config/db.js`**: Contains the database connection logic, including functions to connect to MongoDB and retrieve the database instance.
-- **`controllers/`**: Directory for controller files, which handle the application logic for different routes and endpoints.
-- **`Dockerfile`**: The Dockerfile for building the Node.js application container.
-- **`docker-compose.yml`**: Docker Compose configuration file for defining and running the multi-container application.
-- **`models/`**: Directory for Mongoose models, defining the schema and structure of the application data.
-- **`package.json`**: Lists the project dependencies and scripts.
-- **`public/views/`**: Directory for storing view templates (e.g., EJS templates) used by the Express.js application.
-- **`routes/`**: Directory for route files, defining the application's API endpoints.
-- **`.env` (optional)**: Environment file for storing sensitive configuration variables like `MONGO_URI`.
+### Using Docker (Recommended)
 
-## Environment Variables
-The application requires specific environment variables to function correctly. These variables can be set in a `.env` file located at the root of the project. 
-
-- **`MONGO_URI`**: The MongoDB connection string, which specifies the address and database name to connect to.
-
-### Example `.env` File
-An example `.env` file might look like this:
+1. Clone the repository
+```bash
+git clone https://github.com/AllanMusinguzi/mwwmsdb.git
+cd mwwmsdb
 ```
-MONGO_URI=mongodb://mongo:27017/mydatabase
+
+2. Create environment file
+```bash
+cp .env.example .env
 ```
-Ensure that the `MONGO_URI` matches the format expected by the MongoDB connection library.
 
-## Running the Application
-To start and run the MyWasteWatch application, follow these steps:
+3. Update the `.env` file with your configuration:
+```env
+PORT=3000
+MONGODB_URI=mongodb://mongo:27017/mwwmsdb
+SECRET_KEY=your_secret_key
+NODE_ENV=development
+```
 
-1. **Clone the Repository**:
-   - Use `git clone` to clone the repository to your local machine.
-   - Navigate to the project directory using `cd MyWasteWatch`.
+4. Build and run with Docker Compose
+```bash
+docker-compose up --build -d
+```
 
-2. **Build and Run the Docker Containers**:
-   - Use the `docker-compose up --build` command to build the Docker images and start the containers.
-   - This command will download the necessary images, build the application container, and start both the MongoDB and Node.js services.
+### Manual Installation
 
-3. **Access the Application**:
-   - Once the services are running, the application will be accessible at `http://localhost:3000`.
+1. Clone the repository
+```bash
+git clone https://github.com/AllanMusinguzi/mwwmsdb.git
+cd mwwmsdb
+```
 
-## Troubleshooting
-Common issues and solutions when working with the MyWasteWatch application:
+2. Install dependencies
+```bash
+npm install
+```
 
-### MongoDB Connection Error
-- **Error**: `TypeError: Cannot read properties of undefined (reading 'startsWith')`
-- **Cause**: This error typically occurs when the `MONGO_URI` environment variable is not set correctly or the MongoDB connection string format is incorrect.
-- **Solution**: Verify that the `MONGO_URI` is correctly specified in the `.env` file and follows the MongoDB connection string format. Ensure the MongoDB service is running and accessible.
+3. Configure environment variables
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
 
-### View Not Found Error
-- **Error**: `Error: Failed to lookup view "admin/adminlogin.ejs" in views directory "/app/public/views"`
-- **Cause**: The specified view template is not found in the expected directory.
-- **Solution**: Ensure that the `adminlogin.ejs` file exists in the `public/views/admin/` directory and the path specified in the code matches the file location.
+4. Start the application
+```bash
+npm run dev  # For development
+npm start    # For production
+```
 
-### Database Collection Error
-- **Error**: `TypeError: Cannot read properties of undefined (reading 'collection')`
-- **Cause**: This error occurs when attempting to access a MongoDB collection before the database connection is established.
-- **Solution**: Ensure that the database connection logic is correctly implemented and the application waits for the connection to be established before accessing collections.
+## 🌐 API Documentation
 
-By following this documentation, you should be able to set up, run, and troubleshoot the MyWasteWatch application effectively. If you encounter any additional issues or have further questions, refer to the project's source code and configuration files for more details.
+The API documentation is available at `/api/docs` when running the application. Key endpoints include:
+
+```
+POST   /api/auth/register    - User registration
+POST   /api/auth/login       - User authentication
+GET    /api/collections      - List waste collections
+POST   /api/collections      - Schedule new collection
+GET    /api/routes          - Get optimized routes
+GET    /api/analytics       - Get system analytics
+```
+
+## 📦 Project Structure
+The project directory is organised as follows:
+
+```
+project-root/
+├── config/                  # Configuration files
+├── controllers/             # Application controllers
+├── middleware/              # Custom middleware
+├── node_modules/            # Node.js modules
+├── public/                  # Public assets
+│   ├── css/                 # CSS files
+│   ├── images/              # Images
+│   └── js/                  # JavaScript files
+├── views/                   # Views for rendering HTML pages
+│   ├── admin/               # Admin-specific views
+│   ├── common/              # Common views shared across the application
+│   ├── driver/              # Views for drivers
+│   ├── user/                # Views for users
+│   ├── 404.ejs              # 404 error page
+│   ├── about-us.ejs         # About Us page
+│   ├── contact-us.ejs       # Contact Us page
+│   ├── homepage.ejs         # Homepage
+│   └── services.ejs         # Services page
+├── routes/                  # Application routes
+├── utils/                   # Utility functions
+├── .env                     # Environment variables
+├── .env.example             # Example environment file
+├── .gitignore               # Git ignore file
+├── app.js                   # Main application file
+├── docker-compose.yml       # Docker Compose configuration
+├── Dockerfile               # Dockerfile for containerization
+├── LICENSE                  # License file
+├── package.json             # Node.js dependencies and scripts
+├── package-lock.json        # Lock file for dependencies
+└── README.md                # Project README file
+```
+
+## 🚀 Deployment
+
+### Production Deployment
+
+1. Transfer files to your production server:
+```bash
+scp -r mwwmsdb user@server_ip:/path/to/destination
+```
+
+2. SSH into your server:
+```bash
+ssh user@server_ip
+```
+
+3. Navigate to project directory and start:
+```bash
+cd /path/to/destination/mwwmsdb
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### Environment Configuration
+
+Configure the following environment variables for production:
+
+```env
+NODE_ENV=production
+PORT=3000
+MONGODB_URI=mongodb://mongo:27017/mwwmsdb
+SECRET_KEY=your_secure_secret_key
+```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+# Run all tests
+npm test
+
+# Run specific test suite
+npm test -- --grep "Auth Tests"
+
+# Generate coverage report
+npm run test:coverage
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+1. **MongoDB Connection Failed**
+   - Check if MongoDB container is running: `docker ps`
+   - Verify MongoDB URI in `.env`
+   - Check network connectivity between containers
+
+2. **Application Not Starting**
+   - Verify all required environment variables are set
+   - Check application logs: `docker-compose logs app`
+   - Ensure ports are not already in use
+
+3. **Docker Build Failed**
+   - Clear Docker cache: `docker system prune`
+   - Check Dockerfile syntax
+   - Verify all required files are present
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- MongoDB team for excellent database solution
+- Docker team for containerization platform
+- Express.js team for the web framework
+- All contributors who have helped with the project
+
+## 📞 Contact
+
+allanpatrick🇺🇬 - [@allanpatrick40](https://twitter.com/@allanpatrick40)
+Patrick Allan Musinguzi - [@allanpatrick40](https://linkedin/in/@allanpatrick40)
+
+Project Link: [https://github.com/AllanMusinguzi/mwwmsdb](https://github.com/AllanMusinguzi/mwwmsdb)
