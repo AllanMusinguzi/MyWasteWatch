@@ -90,22 +90,40 @@ GET    /api/analytics       - Get system analytics
 ```
 
 ## 📦 Project Structure
+The project directory is organised as follows:
 
 ```
-mwwmsdb/
-├── src/
-│   ├── config/         # Configuration files
-│   ├── controllers/    # Request handlers
-│   ├── models/        # Database models
-│   ├── routes/        # API routes
-│   ├── middleware/    # Custom middleware
-│   ├── utils/         # Utility functions
-│   └── app.js         # Application entry point
-├── docker/            # Docker configuration files
-├── tests/            # Test files
-├── .env.example      # Example environment variables
-├── docker-compose.yml # Docker compose configuration
-└── package.json      # Project dependencies
+project-root/
+├── config/                  # Configuration files
+├── controllers/             # Application controllers
+├── middleware/              # Custom middleware
+├── node_modules/            # Node.js modules
+├── public/                  # Public assets
+│   ├── css/                 # CSS files
+│   ├── images/              # Images
+│   └── js/                  # JavaScript files
+├── views/                   # Views for rendering HTML pages
+│   ├── admin/               # Admin-specific views
+│   ├── common/              # Common views shared across the application
+│   ├── driver/              # Views for drivers
+│   ├── user/                # Views for users
+│   ├── 404.ejs              # 404 error page
+│   ├── about-us.ejs         # About Us page
+│   ├── contact-us.ejs       # Contact Us page
+│   ├── homepage.ejs         # Homepage
+│   └── services.ejs         # Services page
+├── routes/                  # Application routes
+├── utils/                   # Utility functions
+├── .env                     # Environment variables
+├── .env.example             # Example environment file
+├── .gitignore               # Git ignore file
+├── app.js                   # Main application file
+├── docker-compose.yml       # Docker Compose configuration
+├── Dockerfile               # Dockerfile for containerization
+├── LICENSE                  # License file
+├── package.json             # Node.js dependencies and scripts
+├── package-lock.json        # Lock file for dependencies
+└── README.md                # Project README file
 ```
 
 ## 🚀 Deployment
@@ -194,6 +212,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-Allan Musinguzi - [@AllanMusinguzi](https://twitter.com/AllanMusinguzi)
+allanpatrick🇺🇬 - [@allanpatrick40](https://twitter.com/@allanpatrick40)
+Patrick Allan Musinguzi - [@allanpatrick40](https://linkedin/in/@allanpatrick40)
 
 Project Link: [https://github.com/AllanMusinguzi/mwwmsdb](https://github.com/AllanMusinguzi/mwwmsdb)
